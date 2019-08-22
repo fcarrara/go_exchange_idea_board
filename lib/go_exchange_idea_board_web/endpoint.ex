@@ -1,6 +1,8 @@
 defmodule GoExchangeIdeaBoardWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :go_exchange_idea_board
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", GoExchangeIdeaBoardWeb.UserSocket,
     websocket: true,
     longpoll: false

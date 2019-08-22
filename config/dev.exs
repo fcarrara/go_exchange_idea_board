@@ -61,7 +61,8 @@ config :go_exchange_idea_board, GoExchangeIdeaBoardWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/go_exchange_idea_board_web/{live,views}/.*(ex)$",
-      ~r"lib/go_exchange_idea_board_web/templates/.*(eex)$"
+      ~r"lib/go_exchange_idea_board_web/templates/.*(eex)$",
+      ~r{lib/go_exchange_idea_board_web/live/.*(ex)$}
     ]
   ]
 
