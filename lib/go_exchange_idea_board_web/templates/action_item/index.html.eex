@@ -1,0 +1,28 @@
+<h1>Listing Action items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Completed</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for action_item <- @action_items do %>
+    <tr>
+      <td><%= action_item.content %></td>
+      <td><%= action_item.completed %></td>
+
+      <td>
+        <%= link "Show", to: Routes.action_item_path(@conn, :show, action_item) %>
+        <%= link "Edit", to: Routes.action_item_path(@conn, :edit, action_item) %>
+        <%= link "Delete", to: Routes.action_item_path(@conn, :delete, action_item), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Action item", to: Routes.action_item_path(@conn, :new) %></span>

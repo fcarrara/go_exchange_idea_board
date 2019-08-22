@@ -1,0 +1,26 @@
+<h1>Listing Retro formats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for retro_format <- @retro_formats do %>
+    <tr>
+      <td><%= retro_format.name %></td>
+
+      <td>
+        <%= link "Show", to: Routes.retro_format_path(@conn, :show, retro_format) %>
+        <%= link "Edit", to: Routes.retro_format_path(@conn, :edit, retro_format) %>
+        <%= link "Delete", to: Routes.retro_format_path(@conn, :delete, retro_format), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Retro format", to: Routes.retro_format_path(@conn, :new) %></span>

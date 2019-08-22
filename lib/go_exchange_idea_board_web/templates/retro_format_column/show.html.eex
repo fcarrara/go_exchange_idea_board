@@ -1,0 +1,13 @@
+<h1>Show Retro format column</h1>
+
+<ul>
+
+  <li>
+    <strong>Column title:</strong>
+    <%= @retro_format_column.column_title %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.retro_format_column_path(@conn, :edit, @retro_format_column) %></span>
+<span><%= link "Back", to: Routes.retro_format_column_path(@conn, :index) %></span>

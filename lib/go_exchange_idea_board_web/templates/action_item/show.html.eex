@@ -1,0 +1,18 @@
+<h1>Show Action item</h1>
+
+<ul>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @action_item.content %>
+  </li>
+
+  <li>
+    <strong>Completed:</strong>
+    <%= @action_item.completed %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.action_item_path(@conn, :edit, @action_item) %></span>
+<span><%= link "Back", to: Routes.action_item_path(@conn, :index) %></span>

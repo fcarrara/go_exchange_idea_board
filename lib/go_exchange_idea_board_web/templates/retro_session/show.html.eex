@@ -1,0 +1,13 @@
+<h1>Show Retro session</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @retro_session.date %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.retro_session_path(@conn, :edit, @retro_session) %></span>
+<span><%= link "Back", to: Routes.retro_session_path(@conn, :index) %></span>

@@ -1,0 +1,13 @@
+<h1>Show Retro format</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @retro_format.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.retro_format_path(@conn, :edit, @retro_format) %></span>
+<span><%= link "Back", to: Routes.retro_format_path(@conn, :index) %></span>
