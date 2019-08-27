@@ -14,9 +14,9 @@
       <td><%= retro_format.name %></td>
 
       <td>
-        <%= link "Show", to: Routes.retro_format_path(@conn, :show, retro_format) %>
-        <%= link "Edit", to: Routes.retro_format_path(@conn, :edit, retro_format) %>
-        <%= link "Delete", to: Routes.retro_format_path(@conn, :delete, retro_format), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= link "Show", to: Routes.retro_format_path(@socket, :show, retro_format) %>
+        <%= link "Edit", to: Routes.retro_format_path(@socket, :edit, retro_format) %>
+        <%= link "Delete", to: Routes.retro_format_path(@socket, :delete, retro_format), method: :delete, data: [confirm: "Are you sure?"] %>
       </td>
     </tr>
 <% end %>

@@ -37,12 +37,13 @@ defmodule GoExchangeIdeaBoardWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
 
+      import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
+
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
       import GoExchangeIdeaBoardWeb.ErrorHelpers
       import GoExchangeIdeaBoardWeb.Gettext
-      import Phoenix.LiveView, only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2]
       alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
     end
   end

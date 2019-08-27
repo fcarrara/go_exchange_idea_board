@@ -290,8 +290,8 @@ defmodule GoExchangeIdeaBoard.Retrospectives do
       %Ecto.Changeset{source: %RetroSession{}}
 
   """
-  def change_retro_session(%RetroSession{} = retro_session) do
-    RetroSession.changeset(retro_session, %{})
+  def change_retro_session(%RetroSession{} = retro_session, attrs \\ %{}) do
+    RetroSession.changeset(retro_session, attrs)
   end
 
   alias GoExchangeIdeaBoard.Retrospectives.Note

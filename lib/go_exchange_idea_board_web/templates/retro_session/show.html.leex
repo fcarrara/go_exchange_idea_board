@@ -1,0 +1,13 @@
+<h1>Show Retro session</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @retro_session.date %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.live_path(@socket, RetroSessionLive.Edit, @retro_session) %></span>
+<span><%= link "Back", to: Routes.live_path(@socket, RetroSessionLive.Index) %></span>

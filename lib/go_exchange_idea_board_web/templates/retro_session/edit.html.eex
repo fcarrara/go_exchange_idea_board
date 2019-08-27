@@ -1,5 +1,0 @@
-<h1>Edit Retro session</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.retro_session_path(@conn, :update, @retro_session)) %>
-
-<span><%= link "Back", to: Routes.retro_session_path(@conn, :index) %></span>

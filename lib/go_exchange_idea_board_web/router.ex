@@ -19,7 +19,12 @@ defmodule GoExchangeIdeaBoardWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/retro-sessions", RetroSessionController
+    live "/retro-sessions", RetroSessionLive.Index
+    live "/retro-sessions/new", RetroSessionLive.New
+    live "/retro-sessions/:id", RetroSessionLive.Show
+    live "/retro-sessions/:id/edit", RetroSessionLive.Edit
+
+    # resources "/retro-sessions", RetroSessionController
     resources "/notes", NoteController
     resources "/retro-formats", RetroFormatController
     resources "/retro-format-columns", RetroFormatColumnController

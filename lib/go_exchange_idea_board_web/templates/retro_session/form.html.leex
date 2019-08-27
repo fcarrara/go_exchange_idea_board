@@ -1,0 +1,9 @@
+<%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :save] %>
+  <%= label f, :date %>
+  <%= datetime_select f, :date %>
+  <%= error_tag f, :date %>
+
+  <div>
+    <%= submit "Save", phx_disable_with: "Saving..."  %>
+  </div>
+</form>
