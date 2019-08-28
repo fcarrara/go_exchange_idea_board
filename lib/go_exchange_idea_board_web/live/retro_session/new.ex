@@ -1,16 +1,18 @@
 defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
   use Phoenix.LiveView
 
-  alias GoExchangeIdeaBoard.Retrospectives
-  alias GoExchangeIdeaBoard.Retrospectives.RetroSession
+  alias GoExchangeIdeaBoard.EventCenter
+  alias GoExchangeIdeaBoard.Retrospectives.{RetroSession, RetroSessions}
   alias GoExchangeIdeaBoardWeb.RetroSessionLive
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
   def mount(_session, socket) do
+    EventCenter.subscribe()
+
     {:ok,
      assign(socket, %{
-       changeset: Retrospectives.change_retro_session(%RetroSession{})
+       changeset: RetroSessions.change_retro_session(%RetroSession{})
      })}
   end
 
@@ -19,19 +21,23 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
   def handle_event("validate", %{"retro_session" => params}, socket) do
     changeset =
       %RetroSession{}
-      |> Retrospectives.change_retro_session(params)
+      |> RetroSessions.change_retro_session(params)
       |> Map.put(:action, :insert)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("save", %{"retro_session" => retro_session_params}, socket) do
-    case Retrospectives.create_retro_session(retro_session_params) do
+    case RetroSessions.create_retro_session(retro_session_params) do
       {:ok, retro_session} ->
         {:stop,
          socket
          |> put_flash(:info, "Retro session created successfully.")
          |> redirect(to: Routes.live_path(socket, RetroSessionLive.Show, retro_session))}
+
+      # GoExchangeIdeaBoardWeb.Endpoint.broadcast_from(self(), "retro_sessions", "save", %{
+      #   retro_session: retro_session
+      # })
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

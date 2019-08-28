@@ -15,7 +15,7 @@ config :go_exchange_idea_board, GoExchangeIdeaBoardWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "3KG4jkDcCjNMDtu8/j5RsfnrhGRBTNdm4xHipz28zhxa+g/y/SB94D+zv40bgmT7",
   render_errors: [view: GoExchangeIdeaBoardWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: GoExchangeIdeaBoard.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub: [name: GoExchangeIdeaBoard.EventCenter.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "aQDSuyxc2/eOtC2xTQfyiZ7j9FI3zALx"]
 
 # Configures Elixir's Logger

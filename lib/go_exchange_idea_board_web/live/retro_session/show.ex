@@ -2,7 +2,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   use Phoenix.LiveView
   use Phoenix.HTML
 
-  alias GoExchangeIdeaBoard.Retrospectives
+  alias GoExchangeIdeaBoard.Retrospectives.RetroSessions
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias Phoenix.LiveView.Socket
 
@@ -13,6 +13,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   end
 
   defp fetch(%Socket{assigns: %{id: id}} = socket) do
-    assign(socket, retro_session: Retrospectives.get_retro_session!(id))
+    assign(socket, retro_session: RetroSessions.get_retro_session!(id))
   end
 end
