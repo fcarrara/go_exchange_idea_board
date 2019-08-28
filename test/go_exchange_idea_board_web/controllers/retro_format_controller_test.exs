@@ -1,14 +1,14 @@
 defmodule GoExchangeIdeaBoardWeb.RetroFormatControllerTest do
   use GoExchangeIdeaBoardWeb.ConnCase
 
-  alias GoExchangeIdeaBoard.Retrospectives
+  alias GoExchangeIdeaBoard.Retrospectives.RetroFormats
 
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:retro_format) do
-    {:ok, retro_format} = Retrospectives.create_retro_format(@create_attrs)
+    {:ok, retro_format} = RetroFormats.create_retro_format(@create_attrs)
     retro_format
   end
 

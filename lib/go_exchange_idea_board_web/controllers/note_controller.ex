@@ -1,21 +1,20 @@
 defmodule GoExchangeIdeaBoardWeb.NoteController do
   use GoExchangeIdeaBoardWeb, :controller
 
-  alias GoExchangeIdeaBoard.Retrospectives
-  alias GoExchangeIdeaBoard.Retrospectives.Note
+  alias GoExchangeIdeaBoard.Retrospectives.{Note, Notes}
 
   def index(conn, _params) do
-    notes = Retrospectives.list_notes()
+    notes = Notes.list_notes()
     render(conn, "index.html", notes: notes)
   end
 
   def new(conn, _params) do
-    changeset = Retrospectives.change_note(%Note{})
+    changeset = Notes.change_note(%Note{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"note" => note_params}) do
-    case Retrospectives.create_note(note_params) do
+    case Notes.create_note(note_params) do
       {:ok, note} ->
         conn
         |> put_flash(:info, "Note created successfully.")
@@ -27,20 +26,20 @@ defmodule GoExchangeIdeaBoardWeb.NoteController do
   end
 
   def show(conn, %{"id" => id}) do
-    note = Retrospectives.get_note!(id)
+    note = Notes.get_note!(id)
     render(conn, "show.html", note: note)
   end
 
   def edit(conn, %{"id" => id}) do
-    note = Retrospectives.get_note!(id)
-    changeset = Retrospectives.change_note(note)
+    note = Notes.get_note!(id)
+    changeset = Notes.change_note(note)
     render(conn, "edit.html", note: note, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "note" => note_params}) do
-    note = Retrospectives.get_note!(id)
+    note = Notes.get_note!(id)
 
-    case Retrospectives.update_note(note, note_params) do
+    case Notes.update_note(note, note_params) do
       {:ok, note} ->
         conn
         |> put_flash(:info, "Note updated successfully.")
@@ -52,8 +51,8 @@ defmodule GoExchangeIdeaBoardWeb.NoteController do
   end
 
   def delete(conn, %{"id" => id}) do
-    note = Retrospectives.get_note!(id)
-    {:ok, _note} = Retrospectives.delete_note(note)
+    note = Notes.get_note!(id)
+    {:ok, _note} = Notes.delete_note(note)
 
     conn
     |> put_flash(:info, "Note deleted successfully.")

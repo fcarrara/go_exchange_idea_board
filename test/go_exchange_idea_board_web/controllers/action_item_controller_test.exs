@@ -1,14 +1,14 @@
 defmodule GoExchangeIdeaBoardWeb.ActionItemControllerTest do
   use GoExchangeIdeaBoardWeb.ConnCase
 
-  alias GoExchangeIdeaBoard.Retrospectives
+  alias GoExchangeIdeaBoard.Retrospectives.ActionItems
 
   @create_attrs %{completed: true, content: "some content"}
   @update_attrs %{completed: false, content: "some updated content"}
   @invalid_attrs %{completed: nil, content: nil}
 
   def fixture(:action_item) do
-    {:ok, action_item} = Retrospectives.create_action_item(@create_attrs)
+    {:ok, action_item} = ActionItems.create_action_item(@create_attrs)
     action_item
   end
 

@@ -1,14 +1,14 @@
 defmodule GoExchangeIdeaBoardWeb.NoteControllerTest do
   use GoExchangeIdeaBoardWeb.ConnCase
 
-  alias GoExchangeIdeaBoard.Retrospectives
+  alias GoExchangeIdeaBoard.Retrospectives.Notes
 
   @create_attrs %{content: "some content"}
   @update_attrs %{content: "some updated content"}
   @invalid_attrs %{content: nil}
 
   def fixture(:note) do
-    {:ok, note} = Retrospectives.create_note(@create_attrs)
+    {:ok, note} = Notes.create_note(@create_attrs)
     note
   end
 

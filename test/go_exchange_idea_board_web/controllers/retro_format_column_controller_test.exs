@@ -1,14 +1,14 @@
 defmodule GoExchangeIdeaBoardWeb.RetroFormatColumnControllerTest do
   use GoExchangeIdeaBoardWeb.ConnCase
 
-  alias GoExchangeIdeaBoard.Retrospectives
+  alias GoExchangeIdeaBoard.Retrospectives.RetroFormatColumns
 
   @create_attrs %{column_title: "some column_title"}
   @update_attrs %{column_title: "some updated column_title"}
   @invalid_attrs %{column_title: nil}
 
   def fixture(:retro_format_column) do
-    {:ok, retro_format_column} = Retrospectives.create_retro_format_column(@create_attrs)
+    {:ok, retro_format_column} = RetroFormatColumns.create_retro_format_column(@create_attrs)
     retro_format_column
   end
 
