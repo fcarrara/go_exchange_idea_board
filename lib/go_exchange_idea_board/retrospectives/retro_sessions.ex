@@ -2,7 +2,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroSessions do
   import Ecto.Query, warn: false
 
   alias GoExchangeIdeaBoard.{EventCenter, Repo}
-  alias GoExchangeIdeaBoard.Retrospectives.{RetroFormat, RetroFormatColumn, RetroSession}
+  alias GoExchangeIdeaBoard.Retrospectives.{Note, RetroFormat, RetroFormatColumn, RetroSession}
 
   def list_retro_sessions do
     Repo.all(RetroSession)
@@ -10,20 +10,17 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroSessions do
 
   def get_retro_session!(id), do: Repo.get!(RetroSession, id)
 
-  def get_retro_format_columns(id) do
+  def get_whole_session(id) do
+    notes = from n in Note, where: [retro_session_id: ^id]
+
     RetroSession
     |> where(id: ^id)
-    |> join(:left, [rs], rf in RetroFormat, on: rs.retro_format_id == rf.id)
+    |> join(:left, [rs], _ in assoc(rs, :retro_format))
     |> join(:left, [_, rf], _ in assoc(rf, :retro_format_columns))
-    |> join(:left, [_, _, rfc], _ in assoc(rfc, :notes))
-    # |> preload([_, rf, rfc], [retro_formats: {rf, retro_format_columns: rfc}])
-    |> select([_, _, rfc, n], %RetroFormatColumn{
-      id: rfc.id,
-      column_title: rfc.column_title,
-      notes: %{id: n.id, content: n.content}
-    })
-    |> where([_,_,_,n], n.retro_session_id == ^id)
-    |> Repo.all()
+    |> join(:left, [_, _, rfc], n in ^notes, on: rfc.id == n.retro_format_column_id)
+    |> order_by([_, _, rfc], rfc.id)
+    |> preload([_, rf, rfc, n], [retro_format: {rf, retro_format_columns: {rfc, notes: n}}])
+    |> Repo.one()
   end
 
   def create_retro_session(attrs \\ %{}) do

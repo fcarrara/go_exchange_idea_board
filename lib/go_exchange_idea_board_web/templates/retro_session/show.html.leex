@@ -10,8 +10,7 @@
 <div class="container">
     
   <div class="row">
-    <%= for retro_format_column <- @retro_format_columns do %>
-      <% current_column = retro_format_column %>
+    <%= for retro_format_column <- @retro_session.retro_format.retro_format_columns do %>
       <div class="col">
         <div><%= retro_format_column.column_title %></div>
         <%= link "+", to: Routes.live_path(@socket, NoteLive.New), class: "btn btn-primary btn-circle", phx_click: "show-modal", data_target: "#note-modal", data_toggle: "modal", "phx-value-retro-session-id": @retro_session.id, "phx-value-column-id": retro_format_column.id, "phx-value-column-title": retro_format_column.column_title, "phx-value-edit-mode": "false" %>

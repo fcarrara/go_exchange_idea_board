@@ -24,6 +24,9 @@ defmodule GoExchangeIdeaBoardWeb.Router do
     live "/retro-sessions/:id", RetroSessionLive.Show
     live "/retro-sessions/:id/edit", RetroSessionLive.Edit
 
+    live "/notes/new", NoteLive.New
+    live "/notes/edit/:id", NoteLive.Edit
+
     # resources "/retro-sessions", RetroSessionController
     resources "/notes", NoteController
     resources "/retro-formats", RetroFormatController

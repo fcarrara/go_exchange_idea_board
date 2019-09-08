@@ -7,8 +7,8 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Note do
   schema "notes" do
     field :content, :string
 
-    belongs_to(:retro_format_columns, RetroFormatColumn, foreign_key: :retro_format_column_id)
-    belongs_to(:retro_sessions, RetroSession, foreign_key: :retro_session_id)
+    belongs_to(:retro_format_column, RetroFormatColumn, foreign_key: :retro_format_column_id)
+    belongs_to(:retro_session, RetroSession, foreign_key: :retro_session_id)
 
     timestamps()
   end

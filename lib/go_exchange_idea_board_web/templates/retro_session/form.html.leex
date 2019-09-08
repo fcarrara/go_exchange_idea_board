@@ -1,0 +1,13 @@
+<%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :save] %>
+  <%= label f, :date %>
+  <%= date_select f, :date, class: "form-control", 
+    default: {DateTime.utc_now.year, DateTime.utc_now.month, DateTime.utc_now.day} %>
+  <%= error_tag f, :date %>
+  <div>
+    <%= label f, :retro_format %>
+    <%= select(f, :retro_format_id, Enum.map(@retro_formats, &{&1.name, &1.id})) %>
+  </div>
+  <div>
+    <%= submit "Save", class: "btn btn-primary", phx_disable_with: "Saving..."  %>
+  </div>
+</form>

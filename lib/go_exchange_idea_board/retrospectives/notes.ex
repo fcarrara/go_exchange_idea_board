@@ -2,10 +2,23 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
   import Ecto.Query, warn: false
 
   alias GoExchangeIdeaBoard.Repo
-  alias GoExchangeIdeaBoard.Retrospectives.Note
+  alias GoExchangeIdeaBoard.Retrospectives.{Note, RetroFormat, RetroFormatColumn}
 
-  def list_notes do
+  def list_notes() do
     Repo.all(Note)
+  end
+
+  def get_columns_with_notes(retro_session_id) do
+    RetroFormat
+    |> join(:left, [rf], _ in assoc(rf, :retro_format_columns))
+    |> join(:left, [_, rfc], _ in assoc(rfc, :notes))
+    |> select([_, rfc, n], %RetroFormatColumn{
+      id: rfc.id,
+      column_title: rfc.column_title,
+      notes: %{id: n.id, content: n.content}
+    })
+    |> where([_,_,n], n.retro_session_id == ^retro_session_id)
+    |> Repo.all()
   end
 
   def get_note!(id), do: Repo.get!(Note, id)

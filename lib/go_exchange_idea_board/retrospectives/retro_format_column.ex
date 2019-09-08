@@ -7,7 +7,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormatColumn do
   schema "retro_format_columns" do
     field :column_title, :string
 
-    belongs_to(:retro_formats, RetroFormat, foreign_key: :retro_format_id)
+    belongs_to(:retro_format, RetroFormat, foreign_key: :retro_format_id)
     has_many(:notes, Note)
 
     timestamps()
