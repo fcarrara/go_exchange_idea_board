@@ -16,7 +16,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Note do
   @doc false
   def changeset(note, attrs) do
     note
-    |> cast(attrs, [:content])
+    |> cast(attrs, [:content, :retro_session_id, :retro_format_column_id])
     |> validate_required([:content])
   end
 end

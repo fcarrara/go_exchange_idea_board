@@ -23,4 +23,7 @@
   </tbody>
 </table>
 
+<%= render "modal.html" %>
+
+<button data-micromodal-trigger="modal-1">New modal note</button>
 <span><%= link "New Note", to: Routes.note_path(@conn, :new) %></span>

@@ -1,5 +1,5 @@
 defmodule GoExchangeIdeaBoardWeb.RetroSessionView do
   use GoExchangeIdeaBoardWeb, :view
 
-  alias GoExchangeIdeaBoardWeb.RetroSessionLive
+  alias GoExchangeIdeaBoardWeb.{NoteLive, NoteView, RetroFormatView, RetroSessionLive}
 end

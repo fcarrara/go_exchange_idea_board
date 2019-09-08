@@ -1,7 +1,7 @@
 defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
   import Ecto.Query, warn: false
 
-  alias GoExchangeIdeaBoard.{EventCenter, Repo}
+  alias GoExchangeIdeaBoard.Repo
   alias GoExchangeIdeaBoard.Retrospectives.Note
 
   def list_notes do
@@ -35,5 +35,9 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
 
   def change_note(%Note{} = note) do
     Note.changeset(note, %{})
+  end
+
+  def change_note(%Note{} = note, attrs \\ %{}) do
+    Note.changeset(note, attrs)
   end
 end

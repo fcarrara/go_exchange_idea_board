@@ -1,0 +1,27 @@
+<div class="modal fade" id=<%= "modal-#{@column_id}" %> tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= @column_title %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= f = form_for @note_changeset, "#", [phx_change: :validate, phx_submit: :save] %>
+          <%= textarea f, :content, class: "form-control w-100", placeholder: "Content" %>
+          <%= hidden_input f, :retro_session_id, value: @retro_session_id %>
+          <%= hidden_input f, :retro_format_column_id, value: @column_id %>        
+          <div class="modal-footer">
+            <%= submit "Add note", class: "btn btn-primary" %> 
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $("#modal-1").modal();
+  });
+</script>
