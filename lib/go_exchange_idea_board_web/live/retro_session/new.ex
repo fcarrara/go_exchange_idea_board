@@ -2,7 +2,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
   use Phoenix.LiveView
 
   alias GoExchangeIdeaBoard.EventCenter
-  alias GoExchangeIdeaBoard.Retrospectives.{RetroSession, RetroSessions}
+  alias GoExchangeIdeaBoard.Retrospectives.{RetroFormats, RetroSession, RetroSessions}
   alias GoExchangeIdeaBoardWeb.RetroSessionLive
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
@@ -10,8 +10,11 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
   def mount(_session, socket) do
     EventCenter.subscribe()
 
+    retro_formats = RetroFormats.list_retro_formats()
+
     {:ok,
      assign(socket, %{
+       retro_formats: retro_formats,
        changeset: RetroSessions.change_retro_session(%RetroSession{})
      })}
   end
@@ -34,10 +37,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
          socket
          |> put_flash(:info, "Retro session created successfully.")
          |> redirect(to: Routes.live_path(socket, RetroSessionLive.Show, retro_session))}
-
-      # GoExchangeIdeaBoardWeb.Endpoint.broadcast_from(self(), "retro_sessions", "save", %{
-      #   retro_session: retro_session
-      # })
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

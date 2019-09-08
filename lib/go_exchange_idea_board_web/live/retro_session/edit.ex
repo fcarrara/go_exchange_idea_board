@@ -1,17 +1,19 @@
 defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Edit do
   use Phoenix.LiveView
 
-  alias GoExchangeIdeaBoard.Retrospectives.RetroSessions
+  alias GoExchangeIdeaBoard.Retrospectives.{RetroFormats, RetroSessions}
   alias GoExchangeIdeaBoardWeb.RetroSessionLive
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
   def mount(%{path_params: %{"id" => id}}, socket) do
     retro_session = RetroSessions.get_retro_session!(id)
+    retro_formats = RetroFormats.list_retro_formats()
 
     {:ok,
      assign(socket, %{
        retro_session: retro_session,
+       retro_formats: retro_formats,
        changeset: RetroSessions.change_retro_session(retro_session)
      })}
   end
