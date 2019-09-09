@@ -2,15 +2,17 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   use Phoenix.LiveView
   use Phoenix.HTML
 
+  alias GoExchangeIdeaBoard.EventCenter
   alias GoExchangeIdeaBoard.Retrospectives.{Note, Notes, RetroFormatColumns, RetroSessions}
   alias GoExchangeIdeaBoardWeb.RetroSessionView
-  alias GoExchangeIdeaBoardWeb.NoteLive.New
   alias Phoenix.LiveView.Socket
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
   def render(assigns), do: RetroSessionView.render("show.html", assigns)
 
   def mount(%{path_params: %{"id" => id}}, socket) do
+    EventCenter.subscribe()
+
     {:ok, fetch(assign(socket, id: id))}
   end
 
@@ -19,6 +21,11 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     changeset = Notes.change_note(%Note{})
 
     assign(socket,
+
+
+
+
+
       retro_session: retro_session,
       changeset: changeset,
       retro_session_id: id,
@@ -132,6 +139,10 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     note = Notes.get_note!(id)
     {:ok, _note} = Notes.delete_note(note)
 
+    {:noreply, fetch(socket)}
+  end
+
+  def handle_info(_, socket) do
     {:noreply, fetch(socket)}
   end
 end
