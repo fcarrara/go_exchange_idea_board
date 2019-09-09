@@ -17,7 +17,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
       column_title: rfc.column_title,
       notes: %{id: n.id, content: n.content}
     })
-    |> where([_,_,n], n.retro_session_id == ^retro_session_id)
+    |> where([_, _, n], n.retro_session_id == ^retro_session_id)
     |> Repo.all()
   end
 

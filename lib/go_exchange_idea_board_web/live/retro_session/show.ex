@@ -21,11 +21,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     changeset = Notes.change_note(%Note{})
 
     assign(socket,
-
-
-
-
-
       retro_session: retro_session,
       changeset: changeset,
       retro_session_id: id,
@@ -114,7 +109,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     end
   end
 
-    def handle_event("submit-edit-note", _, %{assigns: %{note_params: note_params}} = socket) do
+  def handle_event("submit-edit-note", _, %{assigns: %{note_params: note_params}} = socket) do
     case Notes.update_note(socket.assigns.note, note_params) do
       {:ok, note} ->
         socket = assign(socket, open_modal: false, changeset: Notes.change_note(%Note{}))

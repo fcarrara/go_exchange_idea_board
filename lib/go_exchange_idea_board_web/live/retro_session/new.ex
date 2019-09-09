@@ -35,7 +35,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
       {:ok, retro_session} ->
         {:stop,
          socket
-         |> put_flash(:info, "Retro session created successfully.")
          |> redirect(to: Routes.live_path(socket, RetroSessionLive.Show, retro_session))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
