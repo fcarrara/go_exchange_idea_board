@@ -32,7 +32,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   end
 
   def handle_event(
-        "show-modal",
+        "add-note",
         %{
           "retro-session-id" => retro_session_id,
           "column-id" => column_id,
@@ -41,13 +41,16 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
         },
         socket
       ) do
+    note = Notes.change_note(%Note{})
+
     socket =
       socket
       |> assign(:retro_session_id, retro_session_id)
       |> assign(:column_id, column_id)
       |> assign(:column_title, column_title)
-      |> assign(:open_modal, true)
+      |> assign(:changeset, note)
       |> assign(:edit_mode, String.to_existing_atom(edit_mode))
+      |> assign(:open_modal, true)
 
     {:noreply, socket}
   end
@@ -69,10 +72,10 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
       |> assign(:retro_session_id, retro_session_id)
       |> assign(:column_id, column_id)
       |> assign(:column_title, column_title)
-      |> assign(:open_modal, true)
-      |> assign(:edit_mode, true)
       |> assign(:changeset, Notes.change_note(note))
+      |> assign(:edit_mode, true)
       |> assign(:note, note)
+      |> assign(:open_modal, true)
 
     {:noreply, socket}
   end
@@ -130,9 +133,24 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     end
   end
 
+  def handle_event("submit-edit-note", %{"value" => ""}, socket) do
+    {:noreply, socket}
+  end
+
   def handle_event("delete-note", id, socket) do
     note = Notes.get_note!(id)
     {:ok, _note} = Notes.delete_note(note)
+
+    {:noreply, fetch(socket)}
+  end
+
+  def handle_event(
+        "update-note-column-id",
+        %{"note_id" => note_id, "new_column_id" => new_column_id},
+        socket
+      ) do
+    note = Notes.get_note!(note_id)
+    Notes.update_note(note, %{retro_format_column_id: new_column_id})
 
     {:noreply, fetch(socket)}
   end

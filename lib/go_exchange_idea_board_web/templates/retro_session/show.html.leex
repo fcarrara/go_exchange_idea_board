@@ -8,13 +8,14 @@
 </ul>
 
 <div class="container">
-    
   <div class="row">
     <%= for retro_format_column <- @retro_session.retro_format.retro_format_columns do %>
       <div class="col">
         <div><%= retro_format_column.column_title %></div>
-        <%= link "+", to: Routes.live_path(@socket, NoteLive.New), class: "btn btn-primary btn-circle", phx_click: "show-modal", data_target: "#note-modal", data_toggle: "modal", "phx-value-retro-session-id": @retro_session.id, "phx-value-column-id": retro_format_column.id, "phx-value-column-title": retro_format_column.column_title, "phx-value-edit-mode": "false" %>
-        <%= render "column_notes.html", socket: @socket, notes: retro_format_column.notes, retro_session_id: @retro_session.id, column_id: retro_format_column.id, column_title: retro_format_column.column_title %>
+        <%= link "+", to: Routes.live_path(@socket, NoteLive.New), class: "btn btn-primary btn-circle", phx_click: "add-note", data_target: "#note-modal", data_toggle: "modal", "phx-value-retro-session-id": @retro_session.id, "phx-value-column-id": retro_format_column.id, "phx-value-column-title": retro_format_column.column_title, "phx-value-edit-mode": "false" %>
+        <div id="sortable_<%= retro_format_column.id %>" class="connectedSortable">
+          <%= render "column_notes.html", socket: @socket, notes: retro_format_column.notes, retro_session_id: @retro_session.id, column_id: retro_format_column.id, column_title: retro_format_column.column_title %>
+        </div>
       </div>
     <% end %>
   </div>
@@ -39,6 +40,9 @@
           <%= hidden_input f, :retro_session_id, value: @retro_session_id %>
           <%= hidden_input f, :retro_format_column_id, value: @column_id %>        
           <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" phx-click="close-modal">Close</span>
+            </button>
           <%= if @edit_mode do %>
             <%= submit "Edit note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-edit-note" %>
           <% else %>
@@ -52,9 +56,12 @@
 </div>
 
 <script>
-  $(document).ready(function() {
+  
+  
+  $(function() {
     $('#note-modal').on('shown.bs.modal', function() {
-      $('.w-100').trigger('focus');
+      $('#note_content').trigger('focus');
+      /* $('#note_content').val('<%= get_note_value(@changeset) %>'); */
     });
   });
 </script>
