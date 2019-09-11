@@ -50,10 +50,4 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
   def change_note(%Note{} = note, attrs \\ %{}) do
     Note.changeset(note, attrs)
   end
-
-  def update_retro_column_id(id, retro_format_column_id) do
-    %Note{id: id}
-    |> Ecto.Changeset.cast(retro_format_column_id: retro_format_column_id)
-    |> Repo.update()
-  end
 end
