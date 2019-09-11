@@ -3,9 +3,7 @@
 // its own CSS file.
 import css from "../css/app.scss"
 import 'bootstrap';
-
-window.$ = window.jQuery = require("jquery");
-require('webpack-jquery-ui/sortable');
+import {Draggable} from '@shopify/draggable';
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -14,13 +12,6 @@ require('webpack-jquery-ui/sortable');
 // Import dependencies
 //
 import "phoenix_html"
-
-//Micromodal
-// import MicroModal from 'micromodal'
-// MicroModal.init({
-//     onClose: modal => modal.querySelector("#note_content").value = '',
-//     disableFocus: true
-// })
 
 // Import local files
 //
@@ -32,34 +23,59 @@ import LiveSocket from "phoenix_live_view"
 let liveSocket = new LiveSocket("/live")
 liveSocket.connect()
 
-$(function () {
-    $("[id^=sortable]").sortable({
-        connectWith: ".connectedSortable",
-        receive: function (event, ui) {
-            var note_id = ui.item.attr('id');
-            var new_column_id = event.target.id[event.target.id.length - 1];
 
-            liveSocket.owner(this, view => view.pushWithReply("event", {
+let originalContainer;
+let lastOverContainer;
+
+const draggable = new Draggable(document.querySelectorAll('.dropzone'), {
+    draggable: '.drag-drop',
+    mirror: {
+        constrainDimensions: true,
+    }
+});
+
+// draggable.on('drag:over', () => console.log('Dragging over other drag elem'));
+// draggable.on('drag:stop', (evt) => console.log(evt.dragEvent));
+// draggable.on('drag:over:container', (evt) => console.log(evt.data.overContainer.id));
+draggable.on('drag:start', (evt) => {
+    originalContainer = evt.data.sourceContainer
+});
+
+draggable.on('drag:over:container', (evt) => {
+    lastOverContainer = evt.data.overContainer;
+
+//     container.classList.add("hover-container");
+});
+
+$(function(){
+    draggable.on('drag:stop', (evt) => {
+    if (originalContainer.id === lastOverContainer.id) {
+            return;
+        } else {
+            var note_id = (evt.data.source.id).split("_")[1];
+            var new_column_id = (lastOverContainer.id).split("_")[1];
+            
+            liveSocket.owner(originalContainer, view => view.pushWithReply("event", {
                 event: 'update-note-column-id',
                 type: "click",
                 value: { "note_id": note_id, "new_column_id": new_column_id }
-            }))
+            }));
         }
-    }).disableSelection();
+    });
 });
 
-// const EVENT_ATTR = 'phx-modal-click';
-// document.addEventListener('phx:update', () => {
-//     document.querySelectorAll(`[${EVENT_ATTR}]`).forEach(el => {
-//         el.addEventListener('click', () => {
-//             if (confirm('Are you sure?')) {
-//                 const target = document.querySelector('[data-phx-view]');
-//                 liveSocket.owner(target, view => view.pushWithReply("event", {
-//                     event: el.getAttribute(EVENT_ATTR),
-//                     type: "click",
-//                     value: el.getAttribute('phx-value')
-//                 }));
-//             }
-//         });
-//     });
+$(function () {
+    $('#note-modal').on('shown.bs.modal', function () {
+        $('#note_content').trigger('focus');
+    });
+});
+
+// const sortable = new Sortable(containers, {
+//     draggable: `.${Classes.draggable}`,
+//     mirror: {
+//         constrainDimensions: true,
+//     }
+//     // plugins: [Plugins.ResizeMirror],
 // });
+
+
