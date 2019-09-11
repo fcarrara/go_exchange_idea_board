@@ -30,3 +30,120 @@ input[type=number]:focus,
   line-height: 1.428571429;
   border-radius: 15px;
 }
+
+.droppable-item {
+  margin: 20px 0;
+}
+
+.drop-hover {
+  background-color: green;
+}
+
+.sortable-placeholder {
+  background-color: blue;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+// Draggable
+
+.draggable-container--over {
+  background-color: #ccc;
+}
+
+.draggable--over {
+  background-color: #4e4 !important;
+}
+
+.draggable-mirror {
+  z-index: 9999;
+}
+
+// interactjs
+
+#outer-dropzone {
+  height: 140px;
+}
+
+#inner-dropzone {
+  height: 80px;
+}
+
+.draggable {
+  touch-action: none;
+  user-select: none;
+}
+
+.dropzone {
+  // background-color: #ccc;
+  border: dashed 4px transparent;
+  border-radius: 4px;
+  margin: 10px auto 30px;
+  padding: 10px;
+  width: 80%;
+  transition: background-color 0.3s;
+}
+
+.drop-active {
+  border-color: #aaa;
+}
+
+.drop-target {
+  background-color: #29e;
+  border-color: #fff;
+  border-style: solid;
+}
+
+.drag-drop {
+  // display: inline-block;
+  // min-width: 40px;
+  cursor: grab;
+  font-size: 12px;
+  // padding: 2em 0.5em;
+  margin: 10px;
+
+  // color: #fff;
+  // background-color: #29e;
+  // border: solid 2px #fff;
+
+  // touch-action: none;
+  // -webkit-transform: translate(0px, 0px);
+  //         transform: translate(0px, 0px);
+
+  transition: background-color 0.3s;
+}
+
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
+
+.columns-container .dropzone:nth-child(1) .drag-drop {
+  background-color: cornflowerblue;
+}
+
+.columns-container .dropzone:nth-child(2) .drag-drop {
+  background-color: yellow;
+}
+
+.columns-container .dropzone:nth-child(3) .drag-drop {
+  background-color: green;
+}
+
+.columns-container .dropzone:nth-child(4) .drag-drop {
+  background-color: coral;
+}
+
+.columns-container .dropzone:nth-child(5) .drag-drop {
+  background-color: aquamarine;
+}
+
+.columns-container .dropzone:nth-child(6) .drag-drop {
+  background-color: yellow;
+}
+
+.columns-container .dropzone:nth-child(7) .drag-drop {
+  background-color: yellow;
+}
