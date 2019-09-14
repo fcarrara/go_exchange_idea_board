@@ -1,5 +1,0 @@
-<h1>Edit Retro format column</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.retro_format_column_path(@conn, :update, @retro_format_column)) %>
-
-<span><%= link "Back", to: Routes.retro_format_column_path(@conn, :index) %></span>

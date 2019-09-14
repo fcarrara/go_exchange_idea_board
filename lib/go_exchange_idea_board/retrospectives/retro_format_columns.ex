@@ -26,7 +26,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormatColumns do
     Repo.delete(retro_format_column)
   end
 
-  def change_retro_format_column(%RetroFormatColumn{} = retro_format_column) do
-    RetroFormatColumn.changeset(retro_format_column, %{})
+  def change_retro_format_column(%RetroFormatColumn{} = retro_format_column, attrs \\ %{}) do
+    RetroFormatColumn.changeset(retro_format_column, attrs)
   end
 end

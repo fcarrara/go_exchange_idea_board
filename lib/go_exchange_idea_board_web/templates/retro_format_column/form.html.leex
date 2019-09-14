@@ -1,0 +1,15 @@
+<div class="card card-small mb-4">
+  <div class="card-header border-bottom">
+    <h6 class="m-0">Details</h6>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item p-3">
+      <%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :save] %>
+        <%= input f, :column_title %>
+        
+        <div>
+          <%= submit "Save", phx_disable_with: "Saving..." %>
+        </div>
+      </form>
+    </li>
+  

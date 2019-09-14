@@ -29,13 +29,18 @@ defmodule GoExchangeIdeaBoardWeb.Router do
     live "/retro-formats/:id", RetroFormatLive.Show
     live "/retro-formats/:id/edit", RetroFormatLive.Edit
 
+    live "/retro-format-columns", RetroFormatColumnLive.Index
+    live "/retro-format-columns/new", RetroFormatColumnLive.New
+    live "/retro-format-columns/:id", RetroFormatColumnLive.Show
+    live "/retro-format-columns/:id/edit", RetroFormatColumnLive.Edit
+
     live "/notes/new", NoteLive.New
     live "/notes/edit/:id", NoteLive.Edit
 
     # resources "/retro-sessions", RetroSessionController
     resources "/notes", NoteController
     # resources "/retro-formats", RetroFormatController
-    resources "/retro-format-columns", RetroFormatColumnController
+    # resources "/retro-format-columns", RetroFormatColumnController
     resources "/action-items", ActionItemController
   end
 
