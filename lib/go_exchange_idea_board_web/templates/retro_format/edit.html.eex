@@ -1,5 +1,0 @@
-<h1>Edit Retro format</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.retro_format_path(@conn, :update, @retro_format)) %>
-
-<span><%= link "Back", to: Routes.retro_format_path(@conn, :index) %></span>

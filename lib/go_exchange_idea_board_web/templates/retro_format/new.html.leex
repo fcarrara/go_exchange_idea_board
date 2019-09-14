@@ -1,0 +1,10 @@
+<div class="page-header row no-gutters py-4 mb-3 border-bottom">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <h3 class="page-title">Add retro format</h3>
+  </div>
+</div>
+
+<%= render "form.html", assigns %>
+<%#= render RetroFormatColumnView, "new.html", assigns %>
+
+<span><%= link "Back", to: Routes.live_path(@socket, RetroFormatLive.Index) %></span>

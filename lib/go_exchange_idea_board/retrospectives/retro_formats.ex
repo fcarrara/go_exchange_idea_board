@@ -2,13 +2,21 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormats do
   import Ecto.Query, warn: false
 
   alias GoExchangeIdeaBoard.Repo
-  alias GoExchangeIdeaBoard.Retrospectives.RetroFormat
+  alias GoExchangeIdeaBoard.Retrospectives.{RetroFormat, RetroFormatColumns}
 
   def list_retro_formats do
-    Repo.all(RetroFormat)
+    RetroFormat
+    |> Repo.all()
+    |> Repo.preload(:retro_format_columns)
   end
 
-  def get_retro_format!(id), do: Repo.get!(RetroFormat, id)
+  def get_retro_format!(id) do
+    RetroFormat
+    |> where(id: ^id)
+    |> join(:left, [rf], _ in assoc(rf, :retro_format_columns))
+    |> preload([_, rfc], retro_format_columns: rfc)
+    |> Repo.one()
+  end
 
   def create_retro_format(attrs \\ %{}) do
     %RetroFormat{}
@@ -26,7 +34,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormats do
     Repo.delete(retro_format)
   end
 
-  def change_retro_format(%RetroFormat{} = retro_format) do
-    RetroFormat.changeset(retro_format, %{})
+  def change_retro_format(%RetroFormat{} = retro_format, attrs \\ %{}) do
+    RetroFormat.changeset(retro_format, attrs)
   end
 end

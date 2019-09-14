@@ -1,0 +1,9 @@
+<span class="text-uppercase page-subtitle">Retro format</span>
+
+<h4><%= @retro_format.name %></h4>
+<div>
+  <%= render RetroFormatColumnView, "index.html", Map.put(assigns, :retro_format, @retro_format) %>
+</div>
+
+<span><%= link "Edit", to: Routes.live_path(@socket, RetroFormatLive.Edit, @retro_format) %></span>
+<span><%= link "Back", to: Routes.live_path(@socket, RetroFormatLive.Index) %></span>
