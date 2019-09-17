@@ -9,11 +9,11 @@ defmodule GoExchangeIdeaBoardWeb.InputHelpers do
     type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
 
     input_opts = [class: "form-control #{state_class(form, field)}"]
-    label = content_tag :strong, humanize(field), class: "text-muted d-block mb-2"
+    label = content_tag(:strong, humanize(field), class: "text-muted d-block mb-2")
     input = input(type, form, field, input_opts)
     error = GoExchangeIdeaBoardWeb.ErrorHelpers.error_tag(form, field)
 
-    [label, input, error || ""]
+    if opts[:no_label], do: [input || ""], else: [label, input, error || ""]
   end
 
   defp state_class(form, field) do

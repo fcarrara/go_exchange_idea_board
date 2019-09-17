@@ -1,9 +1,44 @@
 <span class="text-uppercase page-subtitle">Retro format</span>
 
 <h4><%= @retro_format.name %></h4>
+<%= link "Edit", to: Routes.live_path(@socket, RetroFormatLive.Edit, @retro_format.id), class: "btn btn-primary btn-sm", phx_click: "edit-retro-format", data_target: "#retro-format-modal", data_toggle: "modal", "phx-value-retro-format-id": @retro_format.id, "phx-value-edit-mode": "true" %>
 <div>
   <%= render RetroFormatColumnView, "index.html", Map.put(assigns, :retro_format, @retro_format) %>
 </div>
 
 <span><%= link "Edit", to: Routes.live_path(@socket, RetroFormatLive.Edit, @retro_format) %></span>
 <span><%= link "Back", to: Routes.live_path(@socket, RetroFormatLive.Index) %></span>
+
+<%= if @open_modal do %>
+  <div class="modal fade show" tabindex="-1" role="dialog" id="note-modal" aria-modal="true" style="display: block;">
+<% else %>
+  <div class="modal fade" tabindex="-1" role="dialog" id="note-modal">
+<% end %>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= @column_title %></h5>
+        <%# <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" phx-click="close-modal">&times;</span>
+        </button> %>
+      </div>
+      <div class="modal-body">
+        <%= f = form_for @changeset, "#", [phx_change: :validate] %>
+          <%= textarea f, :content, class: "form-control w-100" %>
+          <%= hidden_input f, :retro_session_id, value: @retro_session_id %>
+          <%= hidden_input f, :retro_format_column_id, value: @column_id %>  
+         </form>  
+      </div>    
+      <div class="modal-footer">
+        <%# <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" phx-click="close-modal">Close</span>
+        </button> %>
+        <%= if @edit_mode do %>
+          <%= submit "Edit note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-edit-note" %>
+        <% else %>
+          <%= submit "Add note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-new-note" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

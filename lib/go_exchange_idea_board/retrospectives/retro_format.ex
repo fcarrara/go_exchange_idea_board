@@ -7,7 +7,8 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormat do
   schema "retro_formats" do
     field :name, :string
 
-    has_many(:retro_format_columns, RetroFormatColumn)
+    has_many(:retro_format_columns, RetroFormatColumn, on_delete: :delete_all, on_replace: :delete)
+
     has_many(:retro_sessions, RetroSession)
 
     timestamps()
@@ -17,6 +18,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormat do
   def changeset(retro_format, attrs) do
     retro_format
     |> cast(attrs, [:name])
+    |> cast_assoc(:retro_format_columns, required: true)
     |> validate_required([:name])
   end
 end
