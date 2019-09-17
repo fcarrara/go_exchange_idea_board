@@ -1,7 +1,7 @@
 defmodule GoExchangeIdeaBoardWeb.RetroSessionView do
   use GoExchangeIdeaBoardWeb, :view
 
-  alias GoExchangeIdeaBoardWeb.{NoteLive, NoteView, RetroFormatView, RetroSessionLive}
+  alias GoExchangeIdeaBoardWeb.{NoteLive, RetroSessionLive}
 
   def get_note_value(changeset) do
     {:ok, value} = Map.fetch(changeset.data, :content)

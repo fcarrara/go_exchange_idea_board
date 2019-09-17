@@ -1,11 +1,9 @@
-<h1>Retro Session</h1>
-
-<ul>
-  <li>
-    <strong>Date:</strong>
-    <%= @retro_session.date %>
-  </li>
-</ul>
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <span class="text-uppercase page-subtitle"><%= parse_date(@retro_session.date) %></span>
+    <h3 class="page-title">Retro session</h3>
+  </div>
+</div>
 
 <div class="container">
   <div class="row columns-container">
@@ -22,34 +20,34 @@
 </div>
 
 <%= if @open_modal do %>
-  <div class="modal fade show" data-backdrop="static" tabindex="-1" role="dialog" id="note-modal" aria-modal="true" style="display: block;">
+  <div class="modal fade show" tabindex="-1" role="dialog" id="note-modal" aria-modal="true" style="display: block;">
 <% else %>
-  <div class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" id="note-modal">
+  <div class="modal fade" tabindex="-1" role="dialog" id="note-modal">
 <% end %>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"><%= @column_title %></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <%# <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" phx-click="close-modal">&times;</span>
-        </button>
+        </button> %>
       </div>
       <div class="modal-body">
         <%= f = form_for @changeset, "#", [phx_change: :validate] %>
           <%= textarea f, :content, class: "form-control w-100" %>
           <%= hidden_input f, :retro_session_id, value: @retro_session_id %>
-          <%= hidden_input f, :retro_format_column_id, value: @column_id %>        
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true" phx-click="close-modal">Close</span>
-            </button>
-          <%= if @edit_mode do %>
-            <%= submit "Edit note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-edit-note" %>
-          <% else %>
-            <%= submit "Add note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-new-note" %>
-          <% end %>
-          </div>
-        </form>
+          <%= hidden_input f, :retro_format_column_id, value: @column_id %>  
+         </form>  
+      </div>    
+      <div class="modal-footer">
+        <%# <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" phx-click="close-modal">Close</span>
+        </button> %>
+        <%= if @edit_mode do %>
+          <%= submit "Edit note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-edit-note" %>
+        <% else %>
+          <%= submit "Add note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-new-note" %>
+        <% end %>
       </div>
     </div>
   </div>

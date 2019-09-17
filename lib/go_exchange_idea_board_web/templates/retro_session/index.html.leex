@@ -1,29 +1,42 @@
-<h1>Listing Retro sessions</h1>
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <h3 class="page-title">Retro sessions</h3>
+  </div>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for retro_session <- @retro_sessions do %>
-    <tr>
-      <td><%= retro_session.date %></td>
-
-      <td>
-        <%= link "Show", to: Routes.live_path(@socket, RetroSessionLive.Show, retro_session) %>
-        <%= link "Edit", to: Routes.live_path(@socket, RetroSessionLive.Edit, retro_session) %>
-        <%= link "Delete", to: '#',
-            phx_click: "delete_retro_session",
-            phx_value: retro_session.id,
-            data: [confirm: "Are you sure?"] %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+<div class="card card-small mb-4">
+  <div class="card-header border-bottom">
+    <h6 class="m-0">Retro History</h6>
+  </div>
+  <div class="card-body p-0 pb-3 text-center">
+    <table class="table mb-0">
+      <thead class="bg-light">
+        <tr>
+          <th class="border-0">Date</th>
+          <th class="border-0">Retro Format</th>
+          <th class="border-0">Action Items</th>
+          <th class="border-0">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+    <%= for retro_session <- @retro_sessions do %>
+        <tr>
+          <td><%= parse_date(retro_session.date) %></td>
+          <td><%= retro_session.retro_format.name %></td>
+          <td><%= Enum.count(retro_session.action_items) %></td>
+          <td>
+            <%= link "Show", to: Routes.live_path(@socket, RetroSessionLive.Show, retro_session) %>
+            <%#= link "Edit", to: Routes.live_path(@socket, RetroSessionLive.Edit, retro_session) %>
+            <%= link "Delete", to: '#',
+                phx_click: "delete_retro_session",
+                phx_value: retro_session.id,
+                data: [confirm: "Are you sure?"] %>
+          </td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <span><%= link "New Retro Session", to: Routes.live_path(@socket, RetroSessionLive.New) %></span>
