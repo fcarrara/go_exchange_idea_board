@@ -3,9 +3,7 @@ defmodule GoExchangeIdeaBoardWeb.NoteLive.New do
 
   alias GoExchangeIdeaBoard.EventCenter
   alias GoExchangeIdeaBoard.Retrospectives.{Note, Notes}
-  alias GoExchangeIdeaBoardWeb.RetroSessionLive
   alias GoExchangeIdeaBoardWeb.NoteView
-  alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
   def mount(_session, socket) do
     EventCenter.subscribe()

@@ -2,7 +2,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormats do
   import Ecto.Query, warn: false
 
   alias GoExchangeIdeaBoard.Repo
-  alias GoExchangeIdeaBoard.Retrospectives.{RetroFormat, RetroFormatColumns}
+  alias GoExchangeIdeaBoard.Retrospectives.RetroFormat
 
   def list_retro_formats do
     RetroFormat

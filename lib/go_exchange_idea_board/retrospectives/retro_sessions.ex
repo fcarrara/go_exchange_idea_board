@@ -2,10 +2,13 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroSessions do
   import Ecto.Query, warn: false
 
   alias GoExchangeIdeaBoard.{EventCenter, Repo}
-  alias GoExchangeIdeaBoard.Retrospectives.{Note, RetroFormat, RetroFormatColumn, RetroSession}
+  alias GoExchangeIdeaBoard.Retrospectives.{Note, RetroSession}
 
   def list_retro_sessions do
-    Repo.all(RetroSession)
+    RetroSession
+    |> Repo.all()
+    |> Repo.preload(:retro_format)
+    |> Repo.preload(:action_items)
   end
 
   def get_retro_session!(id), do: Repo.get!(RetroSession, id)

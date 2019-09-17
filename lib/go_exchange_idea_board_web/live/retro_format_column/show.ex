@@ -1,4 +1,3 @@
-
 defmodule GoExchangeIdeaBoardWeb.RetroFormatColumnLive.Show do
   use Phoenix.LiveView
   use Phoenix.HTML
@@ -6,8 +5,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatColumnLive.Show do
   alias GoExchangeIdeaBoard.EventCenter
   alias GoExchangeIdeaBoardWeb.RetroFormatColumnView
   alias GoExchangeIdeaBoard.Retrospectives.RetroFormatColumns
-  alias Phoenix.LiveView.Socket
-  alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
   def render(assigns), do: RetroFormatColumnView.render("show.html", assigns)
 

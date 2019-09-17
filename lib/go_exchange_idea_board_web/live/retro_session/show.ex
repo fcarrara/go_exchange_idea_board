@@ -3,7 +3,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   use Phoenix.HTML
 
   alias GoExchangeIdeaBoard.EventCenter
-  alias GoExchangeIdeaBoard.Retrospectives.{Note, Notes, RetroFormatColumns, RetroSessions}
+  alias GoExchangeIdeaBoard.Retrospectives.{Note, Notes, RetroSessions}
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias Phoenix.LiveView.Socket
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
@@ -114,7 +114,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
 
   def handle_event("submit-edit-note", _, %{assigns: %{note_params: note_params}} = socket) do
     case Notes.update_note(socket.assigns.note, note_params) do
-      {:ok, note} ->
+      {:ok, _note} ->
         socket = assign(socket, open_modal: false, changeset: Notes.change_note(%Note{}))
 
         {:noreply,
