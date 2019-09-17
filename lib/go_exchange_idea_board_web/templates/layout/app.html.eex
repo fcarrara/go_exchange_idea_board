@@ -4,33 +4,57 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>GoExchangeIdeaBoard · Phoenix Framework</title>
+    <title>IdeaBoard · Go.Exchange</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
   </head>
-  <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
-          <%# <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-          </ul> %>
-        </nav>
-        <a href="http://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
+  <body class="h-100">
+    <%# <header> %>
+      <section class="container-fluid">
+        <div class="row">
+          <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
+            <div class="main-navbar">
+              <nav role="navigation" class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+                <a class="navbar-brand w-100 mr-0" href="#">
+                  <div class="w-100 text-center">
+                    <img class="h-100 mw-100" src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Go.Exchange"/>                
+                  </div>
+                </a>
+              </nav>
+            </div>
+            <div class="nav-wrapper">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="<%= Routes.live_path(@conn, RetroSessionLive.Index) %>">
+                  <i class="material-icons">add</i>
+                  <span>Retro Sessions</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="<%= Routes.live_path(@conn, RetroFormatLive.Index) %>">
+                  <i class="material-icons">add</i>
+                  <span>Retro Formats</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          </aside>
+        </div>        
       </section>
-    </header>
-    <main role="main" class="container">
-      <%= unless is_nil(get_flash(@conn, :info)) do %>
-        <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <% end %>
-      <%= unless is_nil(get_flash(@conn, :error)) do %>
-        <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <% end %>
-      <%= render @view_module, @view_template, assigns %>
+    <%# </header> %>
+    <main role="main" class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+      <div class="main-content-container container-fluid px-4">
+        <%= unless is_nil(get_flash(@conn, :info)) do %>
+          <p class="alert alert-info fade mb-0" role="alert"><%= get_flash(@conn, :info) %></p>
+        <% end %>
+        <%= unless is_nil(get_flash(@conn, :error)) do %>
+          <p class="alert alert-danger fade mb-0" role="alert"><%= get_flash(@conn, :error) %></p>
+        <% end %>
+        <%= render @view_module, @view_template, assigns %>
+      </div>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-    <script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document)</script>
+    <%# <script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document) %>
   </body>
 </html>

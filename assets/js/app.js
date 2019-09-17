@@ -65,9 +65,23 @@ $(function(){
 });
 
 $(function () {
-    $('#note-modal').on('shown.bs.modal', function () {
-        $('#note_content').trigger('focus');
+    $('#note-modal').on('show.bs.modal', function () {
+        let note = $('#note_content')
+        note.val("")
+        note.trigger('focus')
     });
+    
+    $('#note-modal').on('shown.bs.modal', function () {
+        let note = $('#note_content')
+        note.trigger('focus')
+    });
+
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+    });
+
 });
 
 // const sortable = new Sortable(containers, {
