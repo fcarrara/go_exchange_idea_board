@@ -5,14 +5,14 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
   <div class="row columns-container">
     <%= for retro_format_column <- @retro_session.retro_format.retro_format_columns do %>
       <div id="column_<%= retro_format_column.id %>" class="col dropzone text-center">
         <h5><%= retro_format_column.column_title %></h5>
         <%= link "+", to: Routes.live_path(@socket, NoteLive.New), class: "btn btn-primary btn-circle", phx_click: "add-note", data_target: "#note-modal", data_toggle: "modal", "phx-value-retro-session-id": @retro_session.id, "phx-value-column-id": retro_format_column.id, "phx-value-column-title": retro_format_column.column_title, "phx-value-edit-mode": "false" %>
         <div class="notes">
-          <%= render "column_notes.html", socket: @socket, notes: retro_format_column.notes, retro_session_id: @retro_session.id, column_id: retro_format_column.id, column_title: retro_format_column.column_title %>
+          <%= render "column_notes.html", socket: @socket, notes: retro_format_column.notes, retro_session_id: @retro_session.id, column_id: retro_format_column.id, column_title: retro_format_column.column_title, color: retro_format_column.color %>
         </div>
       </div>
     <% end %>
@@ -40,9 +40,9 @@
          </form>  
       </div>    
       <div class="modal-footer">
-        <%# <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" phx-click="close-modal">Close</span>
-        </button> %>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" phx-click="close-modal">Cancel</span>
+        </button>
         <%= if @edit_mode do %>
           <%= submit "Edit note", disabled: !@changeset.valid?, class: "btn btn-primary", data_dismiss: "modal", phx_click: "submit-edit-note" %>
         <% else %>

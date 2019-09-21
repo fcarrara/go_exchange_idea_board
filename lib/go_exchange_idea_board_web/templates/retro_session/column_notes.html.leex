@@ -1,5 +1,5 @@
 <%= for note <- @notes do %>
-  <div id="note_<%= note.id %>" class="drag-drop card card-small">
+  <div id="note_<%= note.id %>" class="drag-drop card card-small <%= @color %>">
     <div class="card-body">
       <p class="card-text"><%= note.content %></p>
       <%= link "Edit", to: Routes.live_path(@socket, NoteLive.Edit, note.id), class: "btn btn-primary btn-sm", phx_click: "edit-note", data_target: "#note-modal", data_toggle: "modal", "phx-value-retro-session-id": @retro_session_id, "phx-value-column-id": @column_id, "phx-value-column-title": @column_title, "phx-value-id": note.id, "phx-value-edit-mode": "true" %>

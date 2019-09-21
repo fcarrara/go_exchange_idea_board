@@ -14,11 +14,23 @@
           <%= inputs_for f, :retro_format_columns, fn i -> %>
             <div class="mb-3">
               <div class="input-group">
-                <%= input i, :column_title, class: "form-control", no_label: true %>
+                <%= select i, :color, [[key: "white", value: "white"],
+                                       [key: "blue", value: "blue"],
+                                       [key: "grey", value: "grey"],
+                                       [key: "green", value: "green"],
+                                       [key: "red", value: "red"],
+                                       [key: "yellow", value: "yellow"],
+                                       [key: "light-blue", value: "light-blue"],
+                                       [key: "black", value: "black"],
+                                       [key: "royal-blue", value: "royal-blue"],
+                                       [key: "java", value: "java"],
+                                       [key: "salmon", value: "salmon"]], class: "color-picker mr-3" %>
+                <%= input i, :column_title, placeholder: "Title", no_label: true %>
                 <div class="input-group-append">
                   <button class="btn btn-danger" phx-click="delete-column" phx-value=<%= i.index %>>Delete</button>
                 </div>
               </div>
+              <%= error_tag i, :color %>
               <%= error_tag i, :column_title %>
             </div>
           <% end %>
