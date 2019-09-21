@@ -10,7 +10,14 @@ defmodule GoExchangeIdeaBoardWeb.ErrorHelpers do
   """
   def error_tag(form, field) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: "help-block")
+      text_field =
+        field
+        |> Atom.to_string()
+        |> String.split("_")
+        |> Enum.join(" ")
+        |> String.capitalize()
+
+      content_tag(:span, text_field <> " " <> translate_error(error), class: "help-block")
     end)
   end
 

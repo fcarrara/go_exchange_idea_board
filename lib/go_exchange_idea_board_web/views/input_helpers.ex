@@ -8,7 +8,7 @@ defmodule GoExchangeIdeaBoardWeb.InputHelpers do
   def input(form, field, opts \\ []) do
     type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
 
-    input_opts = [class: "form-control #{state_class(form, field)}"]
+    input_opts = [class: "form-control #{state_class(form, field)}"] ++ opts
     label = content_tag(:strong, humanize(field), class: "text-muted d-block mb-2")
     input = input(type, form, field, input_opts)
     error = GoExchangeIdeaBoardWeb.ErrorHelpers.error_tag(form, field)
