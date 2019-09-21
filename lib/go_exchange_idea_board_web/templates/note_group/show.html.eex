@@ -1,0 +1,8 @@
+<h1>Show Note group</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.note_group_path(@conn, :edit, @note_group) %></span>
+<span><%= link "Back", to: Routes.note_group_path(@conn, :index) %></span>
