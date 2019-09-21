@@ -81,15 +81,57 @@ $(function () {
         autoclose: true,
         todayHighlight: true
     });
-
 });
 
-// const sortable = new Sortable(containers, {
-//     draggable: `.${Classes.draggable}`,
-//     mirror: {
-//         constrainDimensions: true,
-//     }
-//     // plugins: [Plugins.ResizeMirror],
-// });
+function initSelect2(selector) {
+
+    function formatColor(option) {
+        if (!option.id) {
+            return option.text;
+        }
+        
+        var $option = $(
+            '<span class="color-select ' + option.element.value + '"></span>'
+        );
+
+        return $option;
+    };
+
+    if (!isInitialized()) {
+        $(selector).select2({
+            templateResult: formatColor,
+            templateSelection: formatColor,
+            minimumResultsForSearch: -1,
+            placeholder: "Color",
+            width: "55px"
+        })
+    }
+
+    function isInitialized() {
+        return $(selector).hasClass("select2-hidden-accessible")
+    }
+}
+
+$(document).on("phx:update", (e) => {
+    $('.color-picker').each(function (index, value) {
+        let id = $(this).attr('id')
+        initSelect2('#' + id)
+    });
+
+    // $('.color-picker').each(function(){
+    //     $(this).on('select2:select', function (e) {
+    //         var data = e.currentTarget.value;
+    //         console.log(data);
+    //     });
+    // })
+    // $('.color-picker').find().each(function() {
+    //     // var name = $($(this).html()).prop('class');
+    //     // console.log(name)
+    //     // $('#' + name).selectpicker();
+    //     console.log($(this));
+    // });
+
+    // initSelect2(".color-picker")
+});
 
 
