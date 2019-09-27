@@ -1,5 +1,0 @@
-<h1>New Note group</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.note_group_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.note_group_path(@conn, :index) %></span>
