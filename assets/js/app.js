@@ -2,8 +2,10 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import css from "../css/app.scss"
+
 import 'bootstrap';
 import {Draggable} from '@shopify/draggable';
+import MicroModal from 'micromodal';
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -23,9 +25,12 @@ import LiveSocket from "phoenix_live_view"
 let liveSocket = new LiveSocket("/live")
 liveSocket.connect()
 
+// Drag and drop feature
 
-let originalContainer;
-let lastOverContainer;
+let originalColumn;
+let lastOverColumn;
+let originalNote;
+let lastOverNote;
 
 const draggable = new Draggable(document.querySelectorAll('.dropzone'), {
     draggable: '.drag-drop',
@@ -34,52 +39,72 @@ const draggable = new Draggable(document.querySelectorAll('.dropzone'), {
     }
 });
 
-// draggable.on('drag:over', () => console.log('Dragging over other drag elem'));
-// draggable.on('drag:stop', (evt) => console.log(evt.dragEvent));
-// draggable.on('drag:over:container', (evt) => console.log(evt.data.overContainer.id));
 draggable.on('drag:start', (evt) => {
-    originalContainer = evt.data.sourceContainer
+    originalColumn = evt.data.sourceContainer
+    originalNote = evt.data.source
+});
+
+draggable.on('drag:over', (evt) => {
+    lastOverNote = evt.data.over
+});
+
+draggable.on('drag:out', (evt) => {
+    lastOverNote = originalNote;
 });
 
 draggable.on('drag:over:container', (evt) => {
-    lastOverContainer = evt.data.overContainer;
+    lastOverColumn = evt.data.overContainer;
+});
 
-//     container.classList.add("hover-container");
+draggable.on('drag:out:container', (evt) => {
+    lastOverColumn = originalColumn;
 });
 
 $(function(){
     draggable.on('drag:stop', (evt) => {
-    if (originalContainer.id === lastOverContainer.id) {
-            return;
-        } else {
-            var note_id = (evt.data.source.id).split("_")[1];
-            var new_column_id = (lastOverContainer.id).split("_")[1];
-            
-            liveSocket.owner(originalContainer, view => view.pushWithReply("event", {
-                event: 'update-note-column-id',
+
+        if (originalNote.id != lastOverNote.id) {
+            var original_note_id = (evt.data.source.id).split("_")[1];
+            var over_note_id = (lastOverNote.id).split("_")[1];
+
+            liveSocket.owner(originalNote, view => view.pushWithReply("event", {
+                event: 'group-notes',
                 type: "click",
-                value: { "note_id": note_id, "new_column_id": new_column_id }
+                value: { "source_note_id": original_note_id, "target_note_id": over_note_id }
             }));
+        } else {
+            if (originalColumn.id != lastOverColumn.id) {
+                var note_id = (evt.data.source.id).split("_")[1];
+                var new_column_id = (lastOverColumn.id).split("_")[1];
+
+                liveSocket.owner(originalColumn, view => view.pushWithReply("event", {
+                    event: 'update-note-column-id',
+                    type: "click",
+                    value: { "note_id": note_id, "new_column_id": new_column_id }
+                }));
+            }
         }
+
+        return
     });
 });
 
 $(function () {
-    $('#note-modal').on('show.bs.modal', function () {
-        let note = $('#note_content')
-        note.val("")
-        note.trigger('focus')
-    });
-    
-    $('#note-modal').on('shown.bs.modal', function () {
-        let note = $('#note_content')
-        note.trigger('focus')
-    });
-
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true,
         todayHighlight: true
+    });
+    
+    MicroModal.init({
+        onShow: modal => document.getElementById('note_content').focus(), 
+        onClose: modal => document.getElementById('note_content').value = "",
+        openTrigger: 'data-modal-open',
+        closeTrigger: 'data-modal-close',
+        disableScroll: true,
+        disableFocus: false,
+        awaitOpenAnimation: false,
+        awaitCloseAnimation: true
     });
 });
 
@@ -117,6 +142,17 @@ $(document).on("phx:update", (e) => {
         let id = $(this).attr('id')
         initSelect2('#' + id)
     });
+
+    // $('#note-modal').on('show.bs.modal', function () {
+    //     let note = $('#note_content')
+    //     note.val("")
+    //     note.trigger('focus')
+    // });
+
+    // $('#note-modal').on('shown.bs.modal', function () {
+    //     let note = $('#note_content')
+    //     note.trigger('focus')
+    // });
 
     // $('.color-picker').each(function(){
     //     $(this).on('select2:select', function (e) {
