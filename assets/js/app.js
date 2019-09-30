@@ -5,7 +5,6 @@ import css from "../css/app.scss"
 
 import 'bootstrap';
 import {Draggable} from '@shopify/draggable';
-import MicroModal from 'micromodal';
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
@@ -89,6 +88,7 @@ $(function(){
     });
 });
 
+
 $(function () {
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
@@ -96,16 +96,17 @@ $(function () {
         todayHighlight: true
     });
     
-    MicroModal.init({
-        onShow: modal => document.getElementById('note_content').focus(), 
-        onClose: modal => document.getElementById('note_content').value = "",
-        openTrigger: 'data-modal-open',
-        closeTrigger: 'data-modal-close',
-        disableScroll: true,
-        disableFocus: false,
-        awaitOpenAnimation: false,
-        awaitCloseAnimation: true
-    });
+    $('.add-note').on("click", function(){
+        let note = $('#note_content')
+        note.val("")
+        setTimeout(function () { note.trigger("focus") }, 300);
+    })
+
+    $('.edit-note').on("click", function () {
+        let note = $('#note_content')
+        setTimeout(function () { note.trigger("focus") }, 300);
+    })
+
 });
 
 function initSelect2(selector) {
@@ -142,32 +143,6 @@ $(document).on("phx:update", (e) => {
         let id = $(this).attr('id')
         initSelect2('#' + id)
     });
-
-    // $('#note-modal').on('show.bs.modal', function () {
-    //     let note = $('#note_content')
-    //     note.val("")
-    //     note.trigger('focus')
-    // });
-
-    // $('#note-modal').on('shown.bs.modal', function () {
-    //     let note = $('#note_content')
-    //     note.trigger('focus')
-    // });
-
-    // $('.color-picker').each(function(){
-    //     $(this).on('select2:select', function (e) {
-    //         var data = e.currentTarget.value;
-    //         console.log(data);
-    //     });
-    // })
-    // $('.color-picker').find().each(function() {
-    //     // var name = $($(this).html()).prop('class');
-    //     // console.log(name)
-    //     // $('#' + name).selectpicker();
-    //     console.log($(this));
-    // });
-
-    // initSelect2(".color-picker")
 });
 
 

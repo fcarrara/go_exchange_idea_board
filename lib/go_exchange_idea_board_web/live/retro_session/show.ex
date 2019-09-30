@@ -36,23 +36,23 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
         %{
           "retro-session-id" => retro_session_id,
           "column-id" => column_id,
-          "column-title" => column_title,
-          "edit-mode" => edit_mode
+          "column-title" => column_title
         },
         socket
       ) do
     note = Notes.change_note(%Note{})
 
-    socket =
-      socket
-      |> assign(:retro_session_id, retro_session_id)
-      |> assign(:column_id, column_id)
-      |> assign(:column_title, column_title)
-      |> assign(:changeset, note)
-      |> assign(:edit_mode, String.to_existing_atom(edit_mode))
-      |> assign(:open_modal, true)
+    new_socket =
+      assign(socket,
+        retro_session_id: retro_session_id,
+        column_id: column_id,
+        column_title: column_title,
+        changeset: note,
+        open_modal: true,
+        edit_mode: false
+      )
 
-    {:noreply, socket}
+    {:noreply, new_socket}
   end
 
   def handle_event(
@@ -94,18 +94,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   def handle_event("submit-new-note", _, %{assigns: %{note_params: note_params}} = socket) do
     case Notes.create_note(note_params) do
       {:ok, _note} ->
-        socket = assign(socket, open_modal: false, changeset: Notes.change_note(%Note{}))
-
-        {:noreply,
-         socket
-         |> redirect(
-           to:
-             Routes.live_path(
-               socket,
-               GoExchangeIdeaBoardWeb.RetroSessionLive.Show,
-               Map.get(note_params, "retro_session_id")
-             )
-         )}
+        {:noreply, assign(socket, open_modal: false, changeset: Notes.change_note(%Note{}))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -115,18 +104,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
   def handle_event("submit-edit-note", _, %{assigns: %{note_params: note_params}} = socket) do
     case Notes.update_note(socket.assigns.note, note_params) do
       {:ok, _note} ->
-        socket = assign(socket, open_modal: false, changeset: Notes.change_note(%Note{}))
-
-        {:noreply,
-         socket
-         |> redirect(
-           to:
-             Routes.live_path(
-               socket,
-               GoExchangeIdeaBoardWeb.RetroSessionLive.Show,
-               Map.get(note_params, "retro_session_id")
-             )
-         )}
+        {:noreply, assign(socket, open_modal: false, changeset: Notes.change_note(%Note{}))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
