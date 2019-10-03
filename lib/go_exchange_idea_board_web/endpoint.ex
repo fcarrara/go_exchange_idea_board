@@ -15,7 +15,7 @@ defmodule GoExchangeIdeaBoardWeb.Endpoint do
     at: "/",
     from: :go_exchange_idea_board,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js fonts favicon.ico favicon-180x180.png favicon-32x32.png favicon-16x16.png robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
