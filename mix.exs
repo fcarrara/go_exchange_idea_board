@@ -34,6 +34,7 @@ defmodule GoExchangeIdeaBoard.MixProject do
   defp deps do
     [
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:distillery, "~> 2.1", runtime: false},
       {:ecto_sql, "~> 3.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
