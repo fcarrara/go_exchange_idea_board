@@ -35,7 +35,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
       {:ok, retro_session} ->
         {:stop,
          socket
-         |> redirect(to: Routes.live_path(socket, RetroSessionLive.Show, retro_session))}
+         |> redirect(to: Routes.retro_session_path(socket, :show, retro_session))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

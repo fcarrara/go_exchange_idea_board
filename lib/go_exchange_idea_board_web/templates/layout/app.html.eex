@@ -14,7 +14,7 @@
     <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
   </head>
   <body class="h-100">
-    <%# <header> %>
+    <header>
       <section class="container-fluid">
         <div class="row">
           <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
@@ -29,30 +29,30 @@
             </div>
             <div class="nav-wrapper">
             <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="<%= Routes.live_path(@conn, RetroSessionLive.Index) %>">
+              <li class="nav-item <%= is_active_menu?(@conn, GoExchangeIdeaBoardWeb.RetroSessionController) %>">
+                <%= link to: Routes.retro_session_path(@conn, :index), class: "nav-link" do %>
                   <i class="material-icons">dashboard</i>
                   <span>Retro Sessions</span>
-                </a>
+                <% end %>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="<%= Routes.live_path(@conn, RetroFormatLive.Index) %>">
+              <li class="nav-item <%= is_active_menu?(@conn, GoExchangeIdeaBoardWeb.RetroFormatController) %>">
+                <%= link to: Routes.retro_format_path(@conn, :index), class: "nav-link" do %>
                   <i class="material-icons">view_column</i>
                   <span>Retro Formats</span>
-                </a>
+                <% end %>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="<%= Routes.live_path(@conn, ActionItemLive.Index) %>">
+               <li class="nav-item <%= is_active_menu?(@conn, GoExchangeIdeaBoardWeb.ActionItemController) %>">
+                <%= link to: Routes.action_item_path(@conn, :index), class: "nav-link" do %>
                   <i class="material-icons">playlist_add_check</i>
                   <span>Action Items</span>
-                </a>
+                <% end %>
               </li>
             </ul>
           </div>
           </aside>
         </div>        
       </section>
-    <%# </header> %>
+    </header>
     <main role="main" class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
       <div class="main-content-container container-fluid px-4">
         <%= unless is_nil(get_flash(@conn, :info)) do %>

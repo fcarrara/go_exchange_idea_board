@@ -23,12 +23,11 @@
           <td><%= retro_format.name %></td>
           <td><%= Enum.count(retro_format.retro_format_columns) %></td>
           <td>
-            <%= link "Show", to: Routes.live_path(@socket, RetroFormatLive.Show, retro_format) %>
-            <%= link "Edit", to: Routes.live_path(@socket, RetroFormatLive.Edit, retro_format) %>
-             <%= link "Delete", to: '#',
-                phx_click: "delete_retro_format",
-                phx_value: retro_format.id,
-                data: [confirm: "Are you sure?"] %>
+            <%= link "Edit", to: Routes.retro_format_path(@socket, :edit, retro_format), class: "btn-sm btn-info" %>
+            <%= link "Delete", to: '#', class: "btn-sm btn-danger",
+              phx_click: "delete_retro_format",
+              phx_value: retro_format.id,
+              data: [confirm: "Are you sure?"] %>
           </td>
         </tr>
       <% end %>
@@ -37,4 +36,4 @@
   </div>
 </div>
 
-<span><%= link "Add Retro format", to: Routes.live_path(@socket, RetroFormatLive.New) %></span>
+<span><%= link "Create Retro Format", to: Routes.retro_format_path(@socket, :new), class: "btn btn-primary" %></span>

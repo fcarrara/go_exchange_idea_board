@@ -7,7 +7,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Edit do
   alias GoExchangeIdeaBoardWeb.RetroFormatView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
-  def mount(%{path_params: %{"id" => id}}, socket) do
+  def mount(%{id: id}, socket) do
     EventCenter.subscribe()
 
     retro_format = RetroFormats.get_retro_format!(id)

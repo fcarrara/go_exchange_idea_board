@@ -1,16 +1,18 @@
 defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
+  use GoExchangeIdeaBoardWeb, :controller
   use Phoenix.LiveView
   use Phoenix.HTML
 
   alias GoExchangeIdeaBoard.EventCenter
-  alias GoExchangeIdeaBoard.Retrospectives.{Note, Notes, RetroSessions}
-  alias GoExchangeIdeaBoardWeb.RetroSessionView
+  alias GoExchangeIdeaBoard.Retrospectives.{ActionItem, ActionItems, Note, Notes, RetroSessions}
+  alias GoExchangeIdeaBoardWeb.{ErrorView, RetroSessionView}
   alias Phoenix.LiveView.Socket
-  alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
+
+  action_fallback GoExchangeIdeaBoard.FallbackController
 
   def render(assigns), do: RetroSessionView.render("show.html", assigns)
 
-  def mount(%{path_params: %{"id" => id}}, socket) do
+  def mount(%{id: id}, socket) do
     EventCenter.subscribe()
 
     {:ok, fetch(assign(socket, id: id))}

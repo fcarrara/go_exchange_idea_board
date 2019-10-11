@@ -6,7 +6,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Edit do
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
-  def mount(%{path_params: %{"id" => id}}, socket) do
+  def mount(%{id: id}, socket) do
     retro_session = RetroSessions.get_retro_session!(id)
     retro_formats = RetroFormats.list_retro_formats()
 
@@ -34,8 +34,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Edit do
       {:ok, retro_session} ->
         {:stop,
          socket
-         |> put_flash(:info, "Retro session updated successfully.")
-         |> redirect(to: Routes.live_path(socket, RetroSessionLive.Show, retro_session))}
+         |> redirect(to: Routes.retro_session_path(socket, :show, retro_session))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
