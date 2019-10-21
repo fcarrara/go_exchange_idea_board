@@ -1,0 +1,21 @@
+<div class="card card-small mb-4">
+  <div class="card-header border-bottom">
+    <h6 class="m-0">Details</h6>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item p-3">
+      <%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
+        <div class="form-group">
+          <%= input f, :content %> 
+        </div>
+        <div class="custom-control custom-checkbox mt-4">
+          <%= checkbox f, :completed, class: "custom-control-input" %>
+          <%= label f, :completed, class: "custom-control-label" %>
+        </div>
+        <div>
+          <%= submit "Save", class: "btn btn-primary mt-4", phx_disable_with: "Saving..." %>
+        </div>
+      <% end %>
+    </li>
+  </ul>
+</div>

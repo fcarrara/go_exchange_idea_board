@@ -16,7 +16,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.ActionItem do
   @doc false
   def changeset(action_item, attrs) do
     action_item
-    |> cast(attrs, [:content, :completed])
-    |> validate_required([:content, :completed])
+    |> cast(attrs, [:content, :completed, :retro_session_id])
+    |> validate_required([:content, :completed, :retro_session_id])
   end
 end

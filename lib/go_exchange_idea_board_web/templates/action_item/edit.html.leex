@@ -1,0 +1,9 @@
+<div class="page-header row no-gutters py-4">
+  <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+    <h3 class="page-title">Action Item</h3>
+  </div>
+</div>
+
+<%= render "form.html", assigns %>
+
+<span><%= link "Back", to: Routes.action_item_path(@socket, :index) %></span>
