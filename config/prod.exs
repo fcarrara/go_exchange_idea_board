@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :go_exchange_idea_board, GoExchangeIdeaBoardWeb.Endpoint,
-  url: [host: "localhost", port: System.get_env("PORT")],
+  url: [host: "${APP_NAME}.gigalixirapp.com", port: System.get_env("PORT")],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   root: ".",
