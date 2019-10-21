@@ -1,0 +1,69 @@
+<%= if @open_note_modal do %>
+  <div class="modal micromodal-slide is-open" id="note-modal" aria-hidden="false">
+<% else %>
+  <div class="modal micromodal-slide" id="note-modal" aria-hidden="true">
+<% end %>
+    <div class="modal-overlay" tabindex="-1">
+      <div class="modal-container note-modal-container" role="dialog" aria-modal="true" aria-labelledby="note-modal-title">
+        <%= if @grouped_notes == [] do %>
+          <header class="modal-header">
+            <h5 class="modal-title"><%= @column_title %></h5>
+          </header>
+          <main class="modal-body" id="note-modal-content">
+            <%= f = form_for @note_changeset, "#", [phx_change: :validate] %>
+              <%= textarea f, :content, class: "form-control" %>
+              <%= hidden_input f, :retro_session_id, value: @retro_session_id %>
+              <%= hidden_input f, :retro_format_column_id, value: @column_id %>  
+            </form>
+          </main>
+        <% else %>
+          <div class="modal-header">
+            <h5 class="modal-title"><%= @column_title %></h5>
+            <div id="tab" class="nav btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+              <a href="#original" class="btn btn-white active" data-toggle="tab">
+                <input type="radio">Original
+              </a>
+              <a href="#grouped" class="btn btn-white" data-toggle="tab">
+                <input type="radio">Grouped
+              </a>
+            </div>
+          </div>
+          <div class="modal-body tab-content">
+            <div class="tab-pane fade show active" id="original" role="tabpanel" aria-labelledby="home-tab">
+              <%= f = form_for @note_changeset, "#", [phx_change: :validate] %>
+                <%= textarea f, :content, class: "form-control" %>
+                <%= hidden_input f, :retro_session_id, value: @retro_session_id %>
+                <%= hidden_input f, :retro_format_column_id, value: @column_id %>  
+              </form>  
+            </div>
+            <div class="tab-pane fade" id="grouped" role="tabpanel" aria-labelledby="profile-tab">
+              <%= for note <- @grouped_notes do %>
+                <%= if note != List.first(@grouped_notes) do %>
+                  <div id="note_<%= note.id %>" class="card card-small grouped-note <%= @color %>">
+                    <div class="note-card-body">
+                      <p class="card-text"><%= note.content %></p>
+                      <div class="text-right">
+                        <%= link to: '#', "data-toggle": "tooltip", "data-placement": "left", title: "Ungroup",
+                          phx_click: "ungroup-note",
+                          "phx-value-note-id": note.id do %>
+                          <i class="material-icons">link_off</i>
+                        <% end %>
+                      </div>
+                    </div>
+                </div>
+                <% end %>
+              <% end %>
+            </div> 
+          </div>
+        <% end %>
+        <footer class="modal-footer">
+          <%= link "Cancel", to: "#", class: "btn btn-outline-primary", phx_click: "close-modal" %>
+          <%= if @edit_mode do %>
+            <%= submit "Edit note", disabled: !@note_changeset.valid?, id: "submit-modal", class: "btn btn-primary", phx_click: "submit-edit-note" %>
+          <% else %>
+            <%= submit "Add note", disabled: !@note_changeset.valid?, id: "submit-modal", class: "btn btn-primary", phx_click: "submit-new-note" %>
+          <% end %> 
+        </footer>
+      </div>
+    </div>
+  </div>

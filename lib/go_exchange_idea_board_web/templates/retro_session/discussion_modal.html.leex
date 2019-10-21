@@ -1,0 +1,98 @@
+<%= if @open_discussion_modal do %>
+    <div class="modal micromodal-slide is-open" id="discussion-modal" aria-hidden="false">
+<% else %>
+    <div class="modal micromodal-slide" id="discussion-modal" aria-hidden="true">
+<% end %>
+    <div class="modal-overlay discussion-modal" tabindex="-1">
+        <div class="discussion-modal-container" role="dialog" aria-modal="true" aria-labelledby="discussion-modal-title">
+            <header class="modal-header">
+                <h5 class="modal-title">Retro Discussion</h5>
+                <%= link to: "#", class: "btn btn-outline-primary", phx_click: "close-discussion-modal" do %>
+                    <i class="material-icons">close</i>
+                <% end %>
+            </header>
+            <main class="modal-body discussion-container" id="discussion-modal-content">
+                <div class="row h-100">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card card-small mb-4 h-100">
+                            <div class="card-header border-bottom">
+                                <h6 class="m-0">Notes</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="carousel-notes slider">
+                                    <ul>
+                                        <%= for {note, index} <- Enum.with_index(@notes) do %>
+                                            <li id="slide-<%= index %>" class="slide">
+                                                <div class="card <%= note.color %> carousel-card-note">
+                                                    <span class="badge badge-dark badge-pill badge-note-title"><%= note.title %></span>
+                                                    <span class="badge badge-primary badge-pill badge-note-votes"><i class="material-icons">thumb_up</i> <%= note.votes %></span>
+                                                    <div class="card-body carousel-card-body carousel-card-content">
+                                                        <p class="note-card-text"><%= note.content %></p>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-4 text-center">
+                                                    <%= if index == length(@notes) - 1 do %>
+                                                        <a class="btn btn-dark btn-pill prev" href="#">
+                                                            <i class="material-icons">navigate_before</i> Prev
+                                                        </a>
+                                                    <% else %>
+                                                        <a class="btn btn-dark btn-pill prev" href="#slide-<%= index + 1 %>">
+                                                            <i class="material-icons">navigate_before</i> Prev
+                                                        </a>
+                                                    <% end %>
+                                                    <%= if index == 0 do %>
+                                                        <a class="btn btn-primary btn-pill ml-4 next" href="#slide-<%= index %>">
+                                                            Next <i class="material-icons">navigate_next</i>
+                                                        </a>
+                                                    <% else %>
+                                                        <a class="btn btn-primary btn-pill ml-4 next" href="#slide-<%= index - 1 %>">
+                                                            Next <i class="material-icons">navigate_next</i>
+                                                        </a>
+                                                    <% end %>
+                                                </div>
+                                            </li> 
+                                        <% end %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card card-small mb-4 h-100">
+                            <div class="card-header border-bottom">
+                                <h6 class="m-0">Action Items</h6>
+                            </div>
+                            <div class="card-body">
+                                <%= form_for @action_item_changeset, "#", [phx_change: "validate", phx_submit: "add-action-item"], fn f -> %>
+                                    <%= text_input f, :content, class: "form-control" %>
+                                    <%= hidden_input f, :retro_session_id, value: @retro_session.id %>
+                                    <%= submit phx_disable_with: "Adding...", class: "btn btn-primary mt-3" do %>
+                                        <i class="material-icons">playlist_add</i> Add Action Item 
+                                    <% end %>
+                                <% end %>
+                                <div class="mt-3">
+                                    <ul class="list-group list-group-small list-group-flush">
+                                        <%= for action_item <- @action_items do %>
+                                            <li class="list-group-item d-flex px-3">
+                                                <span class="text-semibold text-fiord-blue"><%= action_item.content %></span>
+                                                <%# <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+                                                    <%= link to: "#", class: "btn btn-white active-light" do %>
+                                                        <%# <i class="material-icons">edit</i> %>
+                                                    <%# <% end %> 
+                                                    <%# <button class= "btn btn-danger" phx-click="delete-action-item" phx-value-id=<%= action_item.id data-confirm="Are you sure"> %>
+                                                        <%# <i class="material-icons">delete</i> %>
+                                                    <%# </button> %>
+                                                <%# </div> %>
+                                                <%# <span class="ml-auto text-right text-semibold text-reagent-gray">button</span> %>
+                                            </li>
+                                        <% end %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div> 
+    </div>
+</div>
