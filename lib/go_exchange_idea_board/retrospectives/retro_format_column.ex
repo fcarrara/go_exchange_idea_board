@@ -6,7 +6,7 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroFormatColumn do
 
   schema "retro_format_columns" do
     field :column_title, :string
-    field :color, :string
+    field :color, :string, default: "white"
 
     belongs_to(:retro_format, RetroFormat, foreign_key: :retro_format_id)
     has_many(:notes, Note)
