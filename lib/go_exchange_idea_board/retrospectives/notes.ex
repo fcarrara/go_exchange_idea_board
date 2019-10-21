@@ -65,29 +65,26 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
   def get_notes_in_group(group_id) do
     Repo.all(
       from n in Note,
-        where: n.group_id == ^group_id
+        where: n.group_id == ^group_id,
+        order_by: [asc: n.id]
     )
   end
 
-  # def get_grouped_notes(retro_session_id) do
-  #   Repo.all(
-  #     from(
-  #       n in Note,
-  #       where(n.retro_session_id == ^retro_session_id),
-  #       where(n.group_id != nil)
-  #     )
-  #   )
-  # end
+  def is_grouped?(%Note{} = note) do
+    !is_nil(note.group_id)
+  end
 
-  # def get_ungrouped_notes(retro_session_id) do
-  #   Repo.all(
-  #     from(
-  #       n in Note,
-  #       where(n.retro_session_id == ^retro_session_id),
-  #       where(n.group_id == nil)
-  #     )
-  #   )
-  # end
+  def update_column_id(note_id, new_column_id) do
+    note = get_note!(note_id)
+
+    if is_grouped?(note) do
+      grouped_notes = get_notes_in_group(note.group_id)
+
+      Enum.each(grouped_notes, &update_note(&1, %{retro_format_column_id: new_column_id}))
+    else
+      update_note(note, %{retro_format_column_id: new_column_id})
+    end
+  end
 
   def group_notes(%Note{} = source_note, %Note{} = target_note) do
     if target_note.group_id == nil do
@@ -107,13 +104,13 @@ defmodule GoExchangeIdeaBoard.Retrospectives.Notes do
     end
   end
 
-  def ungroup_notes(%Note{} = note) do
-    notes = get_notes_in_group(note.group_id)
+  def ungroup_note(%Note{} = note) do
+    grouped_notes = get_notes_in_group(note.group_id)
 
-    if List.length(notes) > 2 do
+    if length(grouped_notes) > 2 do
       update_note(note, %{group_id: nil})
     else
-      Enum.each(notes, &update_note(&1, %{group_id: nil}))
+      Enum.each(grouped_notes, &update_note(&1, %{group_id: nil}))
     end
   end
 end
