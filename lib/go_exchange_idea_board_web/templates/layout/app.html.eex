@@ -10,12 +10,10 @@
     <link rel="shortcut icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
     <title>IdeaBoard · Go.Exchange</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>(function(w,d,u){w.readyQ=[];w.bindReadyQ=[];function p(x,y){if(x=="ready"){w.bindReadyQ.push(y);}else{w.readyQ.push(x);}};var a={ready:p,bind:p};w.$=w.jQuery=function(f){if(f===d||f===u){return a}else{p(f)}}})(window,document)</script>
   </head>
   <body class="h-100">
-    <header>
-      <section class="container-fluid">
+      <div class="container-fluid">
         <div class="row">
           <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
             <div class="main-navbar">
@@ -50,20 +48,19 @@
             </ul>
           </div>
           </aside>
-        </div>        
-      </section>
-    </header>
-    <main role="main" class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
-      <div class="main-content-container container-fluid px-4">
-        <%= unless is_nil(get_flash(@conn, :info)) do %>
-          <p class="alert alert-info fade mb-0" role="alert"><%= get_flash(@conn, :info) %></p>
-        <% end %>
-        <%= unless is_nil(get_flash(@conn, :error)) do %>
-          <p class="alert alert-danger fade mb-0" role="alert"><%= get_flash(@conn, :error) %></p>
-        <% end %>
-        <%= render @view_module, @view_template, assigns %>
+          <main role="main" class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+            <div class="main-content-container container-fluid px-4">
+              <%= unless is_nil(get_flash(@conn, :info)) do %>
+                <div class="alert alert-info fade mb-0" role="alert"><%= get_flash(@conn, :info) %></div>
+              <% end %>
+              <%= unless is_nil(get_flash(@conn, :error)) do %>
+                <div class="alert alert-danger fade mb-0" role="alert"><%= get_flash(@conn, :error) %></div>
+              <% end %>
+              <%= render @view_module, @view_template, assigns %>
+            </div>
+          </main>
+        </div>       
       </div>
-    </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
     <%# <script>(function($,d){$.each(readyQ,function(i,f){$(f)});$.each(bindReadyQ,function(i,f){$(d).bind("ready",f)})})(jQuery,document) %>
   </body>
