@@ -2,7 +2,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Edit do
   use Phoenix.LiveView
 
   alias GoExchangeIdeaBoard.Retrospectives.{RetroFormats, RetroSessions}
-  alias GoExchangeIdeaBoardWeb.RetroSessionLive
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 

@@ -1,4 +1,5 @@
 defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Index do
+  use GoExchangeIdeaBoardWeb, :controller
   use Phoenix.LiveView
 
   alias GoExchangeIdeaBoard.EventCenter
@@ -25,6 +26,10 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Index do
   end
 
   def handle_info(%{event: "save"}, socket) do
+    {:noreply, fetch(socket)}
+  end
+
+  def handle_info(_, socket) do
     {:noreply, fetch(socket)}
   end
 end

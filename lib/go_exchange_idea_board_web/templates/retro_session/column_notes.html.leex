@@ -1,12 +1,74 @@
-<%= for note <- @notes do %>
-  <div id="note_<%= note.id %>" class="drag-drop card card-small <%= @color %>">
-    <div class="card-body">
-      <p class="card-text"><%= note.content %></p>
-      <%= link "Edit", to: Routes.live_path(@socket, NoteLive.Edit, note.id), class: "btn btn-primary btn-sm", phx_click: "edit-note", data_target: "#note-modal", data_toggle: "modal", "phx-value-retro-session-id": @retro_session_id, "phx-value-column-id": @column_id, "phx-value-column-title": @column_title, "phx-value-id": note.id, "phx-value-edit-mode": "true" %>
-      <%= link "X", to: '#',
-            phx_click: "delete-note",
-            phx_value: note.id,
-            data: [confirm: "Are you sure?"] %>
-    </div>
-  </div>  
+<% grouped_notes = get_grouped_notes(@retro_format_column.notes) %>
+<%= for group <- grouped_notes do %>
+    <%= if (elem(group, 0) == nil) do %>
+        <%= Enum.map elem(group,1), fn note -> %>
+            <div id="note_<%= note.id %>" class="drag-drop card <%= @retro_format_column.color %>">
+                <div class="note-card-body">
+                    <p class="note-card-text"><%= note.content %></p>
+                    <div class="container">
+                        <div class="row justify-content-between">
+                            <div>
+                                <%= link to: "#", phx_click: "submit-vote",
+                                    "phx-value-note-id": note.id do %>
+                                    <i class="material-icons">thumb_up</i>
+                                <% end %>
+                                <span class="vote-badge"><%= note.votes %></span>
+                            </div>
+                            <div>
+                                <%= link to: "#", class: "edit-note", 
+                                    phx_click: "edit-note", 
+                                    "phx-value-retro-session-id": @retro_session_id, 
+                                    "phx-value-column-id": @retro_format_column.id, 
+                                    "phx-value-column-title": @retro_format_column.column_title, 
+                                    "phx-value-id": note.id, 
+                                    "phx-value-color": @retro_format_column.color do %>
+                                    <i class="material-icons">edit</i>
+                                <% end %>
+                                <%= link to: '#',
+                                    phx_click: "delete-note",
+                                    phx_value: note.id,
+                                    data: [confirm: "Are you sure?"] do %>
+                                    <i class="material-icons">delete</i>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    <% else %>
+        <% note = List.first(elem(group,1)) %>
+        <div class="group-notes">
+            <div class="lower-note <%= @retro_format_column.color %>"></div>
+            <div class="lower-note <%= @retro_format_column.color %>"></div>
+            <div id="note_<%= note.id %>" class="drag-drop card <%= @retro_format_column.color %>">
+                <div class="note-card-body">
+                    <p class="note-card-text"><%= note.content %></p>
+                    <div class="container">
+                        <div class="row justify-content-between">
+                            <div>
+                                <%= link to: "#", phx_click: "submit-vote",
+                                    "phx-value-note-id": note.id do %>
+                                    <i class="material-icons">thumb_up</i>
+                                <% end %>
+                                <span class="vote-badge"><%= get_total_votes(elem(group,1)) %></span>
+                            </div>
+                            <div>
+                                <%= link to: "#", class: "edit-note", 
+                                    phx_click: "edit-note", 
+                                    "phx-value-retro-session-id": @retro_session_id, 
+                                    "phx-value-column-id": @retro_format_column.id, 
+                                    "phx-value-column-title": @retro_format_column.column_title, 
+                                    "phx-value-id": note.id, 
+                                    "phx-value-color": @retro_format_column.color do %>
+                                    <i class="material-icons">edit</i>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    <% end %>
 <% end %>

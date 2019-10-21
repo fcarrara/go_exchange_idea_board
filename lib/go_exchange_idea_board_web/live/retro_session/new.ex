@@ -3,7 +3,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.New do
 
   alias GoExchangeIdeaBoard.EventCenter
   alias GoExchangeIdeaBoard.Retrospectives.{RetroFormats, RetroSession, RetroSessions}
-  alias GoExchangeIdeaBoardWeb.RetroSessionLive
   alias GoExchangeIdeaBoardWeb.RetroSessionView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 

@@ -14,8 +14,9 @@
         <tr>
           <th class="border-0">Date</th>
           <th class="border-0">Retro Format</th>
+           <th class="border-0">Notes</th>
           <th class="border-0">Action Items</th>
-          <th class="border-0">Actions</th>
+          <th class="border-0 text-right pr-4">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -23,14 +24,21 @@
         <tr>
           <td><%= parse_date(retro_session.date) %></td>
           <td><%= retro_session.retro_format.name %></td>
+           <td><%= Enum.count(retro_session.notes) %></td>
           <td><%= Enum.count(retro_session.action_items) %></td>
           <td>
-            <%= link "Show", to: Routes.live_path(@socket, RetroSessionLive.Show, retro_session) %>
-            <%#= link "Edit", to: Routes.live_path(@socket, RetroSessionLive.Edit, retro_session) %>
-            <%= link "Delete", to: '#',
+            <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
+               <%= link to: Routes.retro_session_path(@socket, :show, retro_session), class: "btn btn-white active-light" do %>
+              <i class="material-icons">edit</i>
+            <% end %>
+            <%= link to: '#', class: "btn btn-danger",
                 phx_click: "delete_retro_session",
                 phx_value: retro_session.id,
-                data: [confirm: "Are you sure?"] %>
+                data: [confirm: "Are you sure?"] do %>
+                <i class="material-icons">delete</i>
+            <% end %>
+            </div>
+           
           </td>
         </tr>
     <% end %>
@@ -39,4 +47,4 @@
   </div>
 </div>
 
-<span><%= link "New Retro Session", to: Routes.live_path(@socket, RetroSessionLive.New) %></span>
+<span><%= link "Create Retro Session", to: Routes.retro_session_path(@socket, :new), class: "btn btn-primary" %></span>

@@ -6,9 +6,10 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroSessions do
 
   def list_retro_sessions do
     RetroSession
+    |> preload(:retro_format)
+    |> preload(:action_items)
+    |> preload(:notes)
     |> Repo.all()
-    |> Repo.preload(:retro_format)
-    |> Repo.preload(:action_items)
   end
 
   def get_retro_session!(id), do: Repo.get!(RetroSession, id)
@@ -21,9 +22,9 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroSessions do
     |> join(:left, [rs], _ in assoc(rs, :retro_format))
     |> join(:left, [_, rf], _ in assoc(rf, :retro_format_columns))
     |> join(:left, [_, _, rfc], n in ^notes, on: rfc.id == n.retro_format_column_id)
-    |> order_by([_, _, rfc], rfc.id)
+    |> order_by([_, _, rfc, n], asc: rfc.id, desc: n.votes, asc: n.id)
     |> preload([_, rf, rfc, n], retro_format: {rf, retro_format_columns: {rfc, notes: n}})
-    |> Repo.one()
+    |> Repo.one!()
   end
 
   def create_retro_session(attrs \\ %{}) do
