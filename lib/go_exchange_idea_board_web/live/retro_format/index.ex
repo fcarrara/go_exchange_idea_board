@@ -17,7 +17,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Index do
     assign(socket, retro_formats: RetroFormats.list_retro_formats())
   end
 
-  def handle_event("delete_retro_format", id, socket) do
+  def handle_event("delete_retro_format", %{"id" => id}, socket) do
     retro_format = RetroFormats.get_retro_format!(id)
     {:ok, _retro_format} = RetroFormats.delete_retro_format(retro_format)
 
@@ -25,6 +25,10 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Index do
   end
 
   def handle_info(%{event: "save"}, socket) do
+    {:noreply, fetch(socket)}
+  end
+
+  def handle_info(_, socket) do
     {:noreply, fetch(socket)}
   end
 end

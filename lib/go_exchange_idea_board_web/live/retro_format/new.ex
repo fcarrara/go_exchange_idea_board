@@ -3,7 +3,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.New do
 
   alias GoExchangeIdeaBoard.EventCenter
   alias GoExchangeIdeaBoard.Retrospectives.{RetroFormats, RetroFormat, RetroFormatColumn}
-  alias GoExchangeIdeaBoardWeb.RetroFormatLive
   alias GoExchangeIdeaBoardWeb.RetroFormatView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
@@ -37,10 +36,10 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.New do
 
   def handle_event("save", %{"retro_format" => retro_format_params}, socket) do
     case RetroFormats.create_retro_format(retro_format_params) do
-      {:ok, retro_format} ->
+      {:ok, _retro_format} ->
         {:stop,
          socket
-         |> redirect(to: Routes.live_path(socket, RetroFormatLive.Show, retro_format))}
+         |> redirect(to: Routes.retro_format_path(socket, :index))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

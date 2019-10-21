@@ -3,7 +3,6 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Edit do
 
   alias GoExchangeIdeaBoard.EventCenter
   alias GoExchangeIdeaBoard.Retrospectives.RetroFormats
-  alias GoExchangeIdeaBoardWeb.RetroFormatLive
   alias GoExchangeIdeaBoardWeb.RetroFormatView
   alias GoExchangeIdeaBoardWeb.Router.Helpers, as: Routes
 
@@ -24,7 +23,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Edit do
 
   defp convert_list_struct_to_map(retro_format_columns) do
     retro_format_columns
-    |> Enum.map(&%{"column_title" => &1.column_title})
+    |> Enum.map(&%{"column_title" => &1.column_title, "color" => &1.color})
     |> Enum.with_index(0)
     |> Enum.map(fn {k, v} -> {v, k} end)
     |> Map.new()
@@ -43,10 +42,10 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Edit do
 
   def handle_event("save", %{"retro_format" => retro_format_params}, socket) do
     case RetroFormats.update_retro_format(socket.assigns.retro_format, retro_format_params) do
-      {:ok, retro_format} ->
+      {:ok, _retro_format} ->
         {:stop,
          socket
-         |> redirect(to: Routes.live_path(socket, RetroFormatLive.Show, retro_format))}
+         |> redirect(to: Routes.retro_format_path(socket, :index))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
@@ -67,7 +66,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.Edit do
     {:noreply, assign(socket, %{changeset: changeset, params: params})}
   end
 
-  def handle_event("delete-column", index, socket) do
+  def handle_event("delete-column", %{"index" => index}, socket) do
     params =
       Map.update!(socket.assigns.params, "retro_format_columns", fn
         retro_format_columns when is_map(retro_format_columns) ->

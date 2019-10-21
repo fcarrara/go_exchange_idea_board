@@ -4,7 +4,7 @@
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item p-3">
-      <%= f = form_for @changeset, "#", [phx_submit: :save] %>
+      <%= form_for @changeset, "#", [phx_submit: :save], fn f -> %>
         <div class="form-group">
           <%= input f, :name %> 
         </div>
@@ -27,7 +27,7 @@
                                        [key: "salmon", value: "salmon"]], class: "color-picker mr-3" %>
                 <%= input i, :column_title, placeholder: "Title", no_label: true %>
                 <div class="input-group-append">
-                  <button class="btn btn-danger" phx-click="delete-column" phx-value=<%= i.index %>>Delete</button>
+                  <button class="btn btn-danger" phx-click="delete-column" phx-value-index=<%= i.index %> type="button">Delete</button>
                 </div>
               </div>
               <%= error_tag i, :color %>
@@ -38,7 +38,7 @@
         <div>
           <%= submit "Save", class: "btn btn-primary mt-3", phx_disable_with: "Saving..." %>
         </div>
-      </form>
+      <% end %>
     </li>
   </ul>
 </div>

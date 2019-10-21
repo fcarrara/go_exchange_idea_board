@@ -1,7 +1,7 @@
 defmodule GoExchangeIdeaBoardWeb.RetroFormatView do
   use GoExchangeIdeaBoardWeb, :view
 
-  alias GoExchangeIdeaBoardWeb.{RetroFormatColumnView, RetroFormatLive}
+  alias GoExchangeIdeaBoardWeb.RetroFormatColumnView
 
   def check_errors(input, field) do
     error = input.errors[field]
