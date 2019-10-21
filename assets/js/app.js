@@ -129,6 +129,7 @@ function initSelect2(selector) {
     }
 }
 
+
 $(document).on("phx:update", (e) => {
     $('.color-picker').each(function (index, value) {
         let id = $(this).attr('id')
@@ -136,4 +137,5 @@ $(document).on("phx:update", (e) => {
     });
 
     $('[data-toggle="tooltip"]').tooltip()
+
 });
