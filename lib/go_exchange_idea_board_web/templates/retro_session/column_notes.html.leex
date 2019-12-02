@@ -15,18 +15,18 @@
                                 <span class="vote-badge"><%= note.votes %></span>
                             </div>
                             <div>
-                                <%= link to: "#", class: "edit-note", 
-                                    phx_click: "edit-note", 
-                                    "phx-value-retro-session-id": @retro_session_id, 
-                                    "phx-value-column-id": @retro_format_column.id, 
-                                    "phx-value-column-title": @retro_format_column.column_title, 
-                                    "phx-value-id": note.id, 
+                                <%= link to: "#", class: "edit-note",
+                                    phx_click: "edit-note",
+                                    "phx-value-retro-session-id": @retro_session_id,
+                                    "phx-value-column-id": @retro_format_column.id,
+                                    "phx-value-column-title": @retro_format_column.column_title,
+                                    "phx-value-id": note.id,
                                     "phx-value-color": @retro_format_column.color do %>
                                     <i class="material-icons">edit</i>
                                 <% end %>
                                 <%= link to: '#',
                                     phx_click: "delete-note",
-                                    phx_value: note.id,
+                                    "phx-value-note-id": note.id,
                                     data: [confirm: "Are you sure?"] do %>
                                     <i class="material-icons">delete</i>
                                 <% end %>
@@ -54,12 +54,12 @@
                                 <span class="vote-badge"><%= get_total_votes(elem(group,1)) %></span>
                             </div>
                             <div>
-                                <%= link to: "#", class: "edit-note", 
-                                    phx_click: "edit-note", 
-                                    "phx-value-retro-session-id": @retro_session_id, 
-                                    "phx-value-column-id": @retro_format_column.id, 
-                                    "phx-value-column-title": @retro_format_column.column_title, 
-                                    "phx-value-id": note.id, 
+                                <%= link to: "#", class: "edit-note",
+                                    phx_click: "edit-note",
+                                    "phx-value-retro-session-id": @retro_session_id,
+                                    "phx-value-column-id": @retro_format_column.id,
+                                    "phx-value-column-title": @retro_format_column.column_title,
+                                    "phx-value-id": note.id,
                                     "phx-value-color": @retro_format_column.color do %>
                                     <i class="material-icons">edit</i>
                                 <% end %>
@@ -69,6 +69,6 @@
                 </div>
             </div>
         </div>
-       
+
     <% end %>
 <% end %>

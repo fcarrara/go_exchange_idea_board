@@ -152,8 +152,8 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     {:noreply, socket}
   end
 
-  def handle_event("delete-note", id, socket) do
-    note = Notes.get_note!(id)
+  def handle_event("delete-note", %{"note-id" => note_id}, socket) do
+    note = Notes.get_note!(note_id)
     {:ok, _note} = Notes.delete_note(note)
 
     {:noreply, fetch(socket)}
