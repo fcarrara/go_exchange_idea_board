@@ -41,6 +41,20 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
     )
   end
 
+  defp fetch_for_broadcast(%Socket{assigns: %{id: id}} = socket) do
+    retro_session = RetroSessions.get_whole_session(id)
+    action_items = ActionItems.list_action_items(id)
+    note_changeset = Notes.change_note(%Note{})
+    action_item_changeset = ActionItems.change_action_item(%ActionItem{})
+
+    assign(socket,
+      retro_session: retro_session,
+      note_changeset: note_changeset,
+      action_item_changeset: action_item_changeset,
+      action_items: action_items
+    )
+  end
+
   def handle_event(
         "add-note",
         %{
@@ -258,7 +272,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Show do
      assign(socket, action_items: ActionItems.list_action_items(action_item.retro_session_id))}
   end
 
-  def handle_info(_, socket) do
-    {:noreply, fetch(socket)}
+  def handle_info(_event, socket) do
+    {:noreply, fetch_for_broadcast(socket)}
   end
 end

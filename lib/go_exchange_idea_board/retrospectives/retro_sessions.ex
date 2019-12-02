@@ -22,7 +22,8 @@ defmodule GoExchangeIdeaBoard.Retrospectives.RetroSessions do
     |> join(:left, [rs], _ in assoc(rs, :retro_format))
     |> join(:left, [_, rf], _ in assoc(rf, :retro_format_columns))
     |> join(:left, [_, _, rfc], n in ^notes, on: rfc.id == n.retro_format_column_id)
-    |> order_by([_, _, rfc, n], asc: rfc.id, desc: n.votes, asc: n.id)
+    # |> order_by([_, _, rfc, n], asc: rfc.id, desc: n.votes, asc: n.id)
+    |> order_by([_, _, rfc, n], asc: rfc.id, asc: n.id)
     |> preload([_, rf, rfc, n], retro_format: {rf, retro_format_columns: {rfc, notes: n}})
     |> Repo.one!()
   end

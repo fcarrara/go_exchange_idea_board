@@ -1,6 +1,5 @@
 defmodule GoExchangeIdeaBoardWeb.LiveHelpers do
   import Phoenix.LiveView
-  alias Phoenix.LiveView.Socket
 
   def add_nested_field(socket, field) do
     params =

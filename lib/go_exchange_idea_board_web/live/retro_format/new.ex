@@ -60,7 +60,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroFormatLive.New do
     {:noreply, assign(socket, %{changeset: changeset, params: params})}
   end
 
-  def handle_event("delete-column", index, socket) do
+  def handle_event("delete-column", %{"index" => index}, socket) do
     params =
       Map.update!(socket.assigns.params, "retro_format_columns", fn
         retro_format_columns when is_map(retro_format_columns) ->

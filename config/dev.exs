@@ -18,6 +18,7 @@ config :go_exchange_idea_board, GoExchangeIdeaBoard.Repo,
 config :go_exchange_idea_board, GoExchangeIdeaBoardWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
+  # catch_errors: true,
   code_reloader: true,
   check_origin: false,
   watchers: [
