@@ -18,7 +18,7 @@ defmodule GoExchangeIdeaBoardWeb.RetroSessionLive.Index do
     assign(socket, retro_sessions: RetroSessions.list_retro_sessions())
   end
 
-  def handle_event("delete_retro_session", id, socket) do
+  def handle_event("delete_retro_session", %{"id" => id}, socket) do
     retro_session = RetroSessions.get_retro_session!(id)
     {:ok, _retro_session} = RetroSessions.delete_retro_session(retro_session)
 

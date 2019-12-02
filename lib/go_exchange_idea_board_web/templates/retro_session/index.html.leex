@@ -16,32 +16,25 @@
           <th class="border-0">Retro Format</th>
            <th class="border-0">Notes</th>
           <th class="border-0">Action Items</th>
-          <th class="border-0 text-right pr-4">Actions</th>
+          <th class="border-0 pr-4">Actions</th>
         </tr>
       </thead>
       <tbody>
-    <%= for retro_session <- @retro_sessions do %>
-        <tr>
-          <td><%= parse_date(retro_session.date) %></td>
-          <td><%= retro_session.retro_format.name %></td>
-           <td><%= Enum.count(retro_session.notes) %></td>
-          <td><%= Enum.count(retro_session.action_items) %></td>
-          <td>
-            <div class="btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Table row actions">
-               <%= link to: Routes.retro_session_path(@socket, :show, retro_session), class: "btn btn-white active-light" do %>
-              <i class="material-icons">edit</i>
-            <% end %>
-            <%= link to: '#', class: "btn btn-danger",
+        <%= for retro_session <- @retro_sessions do %>
+          <tr>
+            <td><%= parse_date(retro_session.date) %></td>
+            <td><%= retro_session.retro_format.name %></td>
+            <td><%= Enum.count(retro_session.notes) %></td>
+            <td><%= Enum.count(retro_session.action_items) %></td>
+            <td>
+              <%= link "Show", to: Routes.retro_session_path(@socket, :show, retro_session), class: "btn-sm btn-info" %>
+              <%= link "Delete", to: '#', class: "btn-sm btn-danger",
                 phx_click: "delete_retro_session",
-                phx_value: retro_session.id,
-                data: [confirm: "Are you sure?"] do %>
-                <i class="material-icons">delete</i>
-            <% end %>
-            </div>
-           
-          </td>
-        </tr>
-    <% end %>
+                phx_value_id: retro_session.id,
+                data: [confirm: "Are you sure?"] %>
+            </td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
