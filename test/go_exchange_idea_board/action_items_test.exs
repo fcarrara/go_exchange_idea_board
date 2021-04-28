@@ -1,16 +1,21 @@
 defmodule GoExchangeIdeaBoard.ActionItemsTest do
   use GoExchangeIdeaBoard.DataCase
 
-  alias GoExchangeIdeaBoard.Retrospectives.{ActionItem, ActionItems}
+  alias GoExchangeIdeaBoard.Retrospectives.{ActionItem, ActionItems, RetroSessions}
 
-  @valid_attrs %{completed: true, content: "some content"}
+  # @valid_attrs %{completed: true, content: "some content"}
   @update_attrs %{completed: false, content: "some updated content"}
   @invalid_attrs %{completed: nil, content: nil}
 
   def action_item_fixture(attrs \\ %{}) do
+    {:ok, retro_session} =
+      attrs
+      |> Enum.into(%{date: ~N[2010-04-17 14:00:00]})
+      |> RetroSessions.create_retro_session()
+
     {:ok, action_item} =
       attrs
-      |> Enum.into(@valid_attrs)
+      |> Enum.into(%{completed: true, content: "some content", retro_session_id: retro_session.id})
       |> ActionItems.create_action_item()
 
     action_item
@@ -27,7 +32,7 @@ defmodule GoExchangeIdeaBoard.ActionItemsTest do
   end
 
   test "create_action_item/1 with valid data creates a action_item" do
-    assert {:ok, %ActionItem{} = action_item} = ActionItems.create_action_item(@valid_attrs)
+    assert {:ok, %ActionItem{} = action_item} = {:ok, action_item_fixture()}
     assert action_item.completed == true
     assert action_item.content == "some content"
   end

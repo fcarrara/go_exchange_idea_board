@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :go_exchange_idea_board, GoExchangeIdeaBoard.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "mypass",
   database: "go_exchange_idea_board_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

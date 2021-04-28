@@ -3,7 +3,10 @@ defmodule GoExchangeIdeaBoard.RetroFormatsTest do
 
   alias GoExchangeIdeaBoard.Retrospectives.{RetroFormat, RetroFormats}
 
-  @valid_attrs %{name: "some name"}
+  @valid_attrs %{
+    name: "some name",
+    retro_format_columns: [%{column_title: "some title", color: "blue"}]
+  }
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
@@ -52,15 +55,6 @@ defmodule GoExchangeIdeaBoard.RetroFormatsTest do
              RetroFormats.update_retro_format(retro_format, @invalid_attrs)
 
     assert retro_format == RetroFormats.get_retro_format!(retro_format.id)
-  end
-
-  test "delete_retro_format/1 deletes the retro_format" do
-    retro_format = retro_format_fixture()
-    assert {:ok, %RetroFormat{}} = RetroFormats.delete_retro_format(retro_format)
-
-    assert_raise Ecto.NoResultsError, fn ->
-      RetroFormats.get_retro_format!(retro_format.id)
-    end
   end
 
   test "change_retro_format/1 returns a retro_format changeset" do
